@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FurnitureStoreManagmentSystem.ViewModel;
+using FurnitureStoreManagmentSystem.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,21 @@ namespace FurnitureStoreManagmentSystem.Views
         public LoginWindow()
         {
             InitializeComponent();
+            this.DataContext = new LoginViewModel();
+        }
+
+        public void Login_Click(object sender, RoutedEventArgs e) 
+        {
+            //Add Functionality to validate login
+            var vm = (LoginViewModel)this.DataContext;
+            vm.Password = txtPassword.Password;
+            var employee = vm.AuthenticateEmployee();
+            if (employee != null) 
+            {
+                var mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FurnitureStoreManagmentSystem.ViewModels;
+using FurnitureStoreManagmentSystem.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,8 @@ using System.Windows.Shapes;
 
 namespace FurnitureStoreManagmentSystem
 {
+
+  
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -23,6 +27,15 @@ namespace FurnitureStoreManagmentSystem
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainViewModel();
+            
+        }
+
+        public void RegisterCustomer_Click(object sender, RoutedEventArgs e) 
+        {
+            var registerCustomer = new RegisterCustomerWindow();
+            registerCustomer.Show();
+            this.Close();
         }
     }
 }
