@@ -22,8 +22,8 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 
         public void AuthenticateEmployee() 
         {
-
-            if (Username == "")
+            this.ErrorMessage = "";
+            if (this.Username == "")
             {
                 this.ErrorMessage = "Username is not entered";
                 return;
@@ -32,6 +32,7 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             if (this.Password == "")
             {
                 this.ErrorMessage = "Password is not entered";
+                return;
             }
             var employee = this.EmployeeDal.AuthenticateEmployee(this.Username, this.Password);
 
