@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureStoreManagmentSystem"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Furniture Managment System" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <Button Margin="10 20" Width="200" Content="Customer Registration" Background="Gray" Click="RegisterCustomer_Click"/>
-        </StackPanel>
+        <Border Background="#222222" CornerRadius="20" Margin="10,20,10,10">
+            <StackPanel>
+                <Label Content="Furniture Managment System" Foreground="White" FontSize="25" HorizontalAlignment='Center'/>
+                <Button Margin="10 20" Width="250" Content="Register Customer" Background="White" FontSize="20"  Click="RegisterCustomer_Click"/>
+            </StackPanel>
+        </Border>
+
     </Grid>
 </Window>
