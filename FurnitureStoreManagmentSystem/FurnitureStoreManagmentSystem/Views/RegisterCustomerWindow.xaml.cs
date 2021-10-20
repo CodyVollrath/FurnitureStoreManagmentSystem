@@ -31,11 +31,19 @@ namespace FurnitureStoreManagmentSystem.Views
         {
             var vm = (CustomerRegistrationViewModel)this.DataContext;
             vm.UploadCustomer();
+            this.goToMainAndClose();
         }
 
         public void Close_Click(object sender, RoutedEventArgs e) 
         {
-        
+            this.goToMainAndClose();
+        }
+
+        private void goToMainAndClose() 
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }

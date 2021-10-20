@@ -1,4 +1,5 @@
-﻿using FurnitureStoreManagmentSystem.Models;
+﻿using FurnitureStoreManagmentSystem.DAL;
+using FurnitureStoreManagmentSystem.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,13 @@ namespace FurnitureStoreManagmentSystem.ViewModels
 {
     public class CustomerRegistrationViewModel
     {
-
+        public CustomerDal customerDal { get; set; }
         public Customer CreatedCustomer { get; set; }
         public List<string> Genders { get; set; }
         public List<string> States { get; set; }
         public CustomerRegistrationViewModel()
         {
+            this.customerDal = new CustomerDal();
             this.Genders = new List<string> { "Male", "Female"};
             this.CreatedCustomer = new Customer();
             this.States = new List<string> {
@@ -31,7 +33,7 @@ namespace FurnitureStoreManagmentSystem.ViewModels
 
         public void UploadCustomer() 
         {
-
+            this.customerDal.CreateCustomer(this.CreatedCustomer);
         }
 
     }

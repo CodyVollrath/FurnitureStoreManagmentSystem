@@ -18,6 +18,6 @@ namespace FurnitureStoreManagmentSystem.Models
         public string Address2 { get; set; } = "";
         public string City { get; set; } = "";
         public string State { get; set; } = "";
-        public string zipCode { get; set; } = "";
+        public string ZipCode { get; set; } = "";
     }
 }

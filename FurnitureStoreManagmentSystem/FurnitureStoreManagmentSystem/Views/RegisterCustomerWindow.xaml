@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureStoreManagmentSystem.Views"
         mc:Ignorable="d"
-        Title="Register Customer" Height="665.75" Width="800">
+        Title="Register Customer" Height="719.75" Width="800">
     <Border Background="#222222" CornerRadius="20" Margin="20">
-        <StackPanel Margin="20,20,25,0" Height="547" VerticalAlignment="Top">
+        <StackPanel Margin="20,20,25,0" Height="604" VerticalAlignment="Top">
             <Label Content="Register Customer" Foreground="White" FontSize="25" HorizontalAlignment='Center'/>
             <Separator></Separator>
             <Label Content="First Name:" Foreground="White"/>
@@ -24,10 +24,12 @@
             <TextBox Name="txtAddress1" Text="{Binding Path=CreatedCustomer.Address1, Mode=TwoWay}" MaxWidth="500"/>
             <Label Content="Address 2" Foreground="White"/>
             <TextBox Name="txtAddress2" Text="{Binding Path=CreatedCustomer.Address2, Mode=TwoWay}" MaxWidth="500"/>
+            <Label Content="State" Foreground="White"/>
+            <ComboBox Name="cmbState" ItemsSource="{Binding Path=States}" SelectedItem="{Binding Mode=TwoWay, Path=CreatedCustomer.State}" MaxWidth="500"/>
             <Label Content="City" Foreground="White"/>
-            <ComboBox Name="cmbCity" ItemsSource="{Binding Path=States}" SelectedItem="{Binding Mode=TwoWay, Path=CreatedCustomer.State}" MaxWidth="500"/>
+            <TextBox Name="txtCity" Text="{Binding Path=CreatedCustomer.City, Mode=TwoWay}" MaxWidth="500"/>
             <Label Content="Zip-Code" Foreground="White"/>
-            <TextBox Name="txtZip" Text="{Binding Path=CreatedCustomer.Zip, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox Name="txtZip" Text="{Binding Path=CreatedCustomer.ZipCode, Mode=TwoWay}" MaxWidth="500"/>
             <Button Name="btnSubmit" Content="Submit" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Register_Click" MaxWidth="200"/>
             <Button Name="btnCancle" Content="Cancle" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Close_Click" MaxWidth="200"/>
         </StackPanel>
