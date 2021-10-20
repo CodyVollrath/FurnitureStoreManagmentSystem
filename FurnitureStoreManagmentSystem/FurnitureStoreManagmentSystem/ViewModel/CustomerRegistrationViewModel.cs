@@ -1,4 +1,5 @@
 ﻿using FurnitureStoreManagmentSystem.DAL;
+using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace FurnitureStoreManagmentSystem.ViewModels
         public Customer CreatedCustomer { get; set; }
         public List<string> Genders { get; set; }
         public List<string> States { get; set; }
+        public string ErrorMessage { get; set; } = "";
         public CustomerRegistrationViewModel()
         {
             this.customerDal = new CustomerDal();
@@ -33,7 +35,25 @@ namespace FurnitureStoreManagmentSystem.ViewModels
 
         public void UploadCustomer() 
         {
-            this.customerDal.CreateCustomer(this.CreatedCustomer);
+            this.ErrorMessage = this.CreatedCustomer.ValidateCustomer();
+            if (this.hasError()) 
+            {
+                return;
+            }
+            try
+            {
+                this.customerDal.CreateCustomer(this.CreatedCustomer);
+            }
+            catch (Exception e) 
+            {
+                this.ErrorMessage = e.Message;
+            }
+            
+        }
+
+        public bool hasError() 
+        {
+            return this.ErrorMessage != "";
         }
 
     }

@@ -101,6 +101,7 @@
     </ApplicationDefinition>
     <Compile Include="DAL\CustomerDal.cs" />
     <Compile Include="DAL\EmployeeDal.cs" />
+    <Compile Include="Extensions\CustomerValidation.cs" />
     <Compile Include="Extensions\DataReaderExtensions.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />

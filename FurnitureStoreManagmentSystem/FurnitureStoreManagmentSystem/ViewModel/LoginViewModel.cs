@@ -10,18 +10,43 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 {
     public class LoginViewModel
     {
+        public string ErrorMessage { get; set; } = "";
         public EmployeeDal EmployeeDal { get; set; }
-        public string Username { get; set;}
-        public string Password { get; set; }
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
 
         public LoginViewModel() 
         {
             this.EmployeeDal = new EmployeeDal();
         }
 
-        public Employee AuthenticateEmployee() 
+        public void AuthenticateEmployee() 
         {
-            return this.EmployeeDal.AuthenticateEmployee(this.Username, this.Password);
+
+            if (Username == "")
+            {
+                this.ErrorMessage = "Username is not entered";
+                return;
+            }
+
+            if (this.Password == "")
+            {
+                this.ErrorMessage = "Password is not entered";
+            }
+            var employee = this.EmployeeDal.AuthenticateEmployee(this.Username, this.Password);
+
+            if (employee == null) 
+            {
+                this.ErrorMessage = "Invalid Login Credentials: Check Username and Password";
+                return;
+            }
+            
         }
+
+        public bool hasError() 
+        {
+            return this.ErrorMessage != "";
+        }
+
     }
 }

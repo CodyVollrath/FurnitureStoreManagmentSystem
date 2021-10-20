@@ -31,7 +31,15 @@ namespace FurnitureStoreManagmentSystem.Views
         {
             var vm = (CustomerRegistrationViewModel)this.DataContext;
             vm.UploadCustomer();
-            this.goToMainAndClose();
+            if (!vm.hasError())
+            {
+                this.goToMainAndClose();
+            }
+            else 
+            {
+                this.lblError.Content = vm.ErrorMessage;
+            }
+            
         }
 
         public void Close_Click(object sender, RoutedEventArgs e) 
