@@ -9,8 +9,11 @@
     <Grid>
         <Border Background="#222222" CornerRadius="20" Margin="10,20,10,10">
             <StackPanel>
-                <Label Content="Furniture Managment System" Foreground="White" FontSize="25" HorizontalAlignment='Center'/>
-                <Button Margin="10 20" Width="250" Content="Register Customer" Background="White" FontSize="20"  Click="RegisterCustomer_Click"/>
+                <Label Name="lblUserInfo" Content="Employee ID: {0} | Username: {1} | Employee name: {2}" Foreground="White" FontSize="15"/>
+                <Separator/>
+                <Label/>
+                <Label Content="Furniture Managment System" Foreground="White" FontSize="25" HorizontalAlignment='Center' Margin="218,0"/>
+                <Button Margin="261,20" Width="250" Content="Register Customer" Background="White" FontSize="20"  Click="RegisterCustomer_Click"/>
             </StackPanel>
         </Border>
 

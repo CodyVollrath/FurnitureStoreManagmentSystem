@@ -32,9 +32,11 @@ namespace FurnitureStoreManagmentSystem.Views
             //Add Functionality to validate login
             var vm = (LoginViewModel)this.DataContext;
             vm.Password = txtPassword.Password;
-            vm.AuthenticateEmployee();
+            var employee = vm.AuthenticateEmployee();
             if (!vm.hasError())
             {
+                var mvm = new MainViewModel();
+                Singletons.CurrentEmployee = employee;
                 var mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();

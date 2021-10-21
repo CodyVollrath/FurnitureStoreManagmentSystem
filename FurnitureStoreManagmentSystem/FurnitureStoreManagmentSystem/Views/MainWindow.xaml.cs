@@ -28,6 +28,8 @@ namespace FurnitureStoreManagmentSystem
         {
             InitializeComponent();
             this.DataContext = new MainViewModel();
+            var fullName = $"{Singletons.CurrentEmployee.FirstName} {Singletons.CurrentEmployee.Lastname}";
+            this.lblUserInfo.Content = String.Format(this.lblUserInfo.Content.ToString(), Singletons.CurrentEmployee.eId, Singletons.CurrentEmployee.Username, fullName);
             
         }
 

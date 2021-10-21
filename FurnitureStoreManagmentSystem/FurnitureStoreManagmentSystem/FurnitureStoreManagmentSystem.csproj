@@ -106,6 +106,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Resources\Constants.cs" />
+    <Compile Include="Singletons.cs" />
     <Compile Include="ViewModel\CustomerRegistrationViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

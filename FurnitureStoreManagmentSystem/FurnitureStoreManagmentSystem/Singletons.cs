@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FurnitureStoreManagmentSystem.ViewModels
+namespace FurnitureStoreManagmentSystem
 {
-    public class MainViewModel
+    public static class Singletons
     {
-
+        public static Employee CurrentEmployee { get; set; }
     }
 }

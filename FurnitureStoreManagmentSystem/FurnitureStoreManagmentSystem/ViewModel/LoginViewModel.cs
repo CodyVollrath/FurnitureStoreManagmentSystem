@@ -20,28 +20,28 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             this.EmployeeDal = new EmployeeDal();
         }
 
-        public void AuthenticateEmployee() 
+        public Employee AuthenticateEmployee() 
         {
             this.ErrorMessage = "";
             if (this.Username == "")
             {
                 this.ErrorMessage = "Username is not entered";
-                return;
+                return null;
             }
 
             if (this.Password == "")
             {
                 this.ErrorMessage = "Password is not entered";
-                return;
+                return null;
             }
             var employee = this.EmployeeDal.AuthenticateEmployee(this.Username, this.Password);
 
             if (employee == null) 
             {
                 this.ErrorMessage = "Invalid Login Credentials: Check Username and Password";
-                return;
+                return employee;
             }
-            
+            return employee;
         }
 
         public bool hasError() 
