@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\cvoll\Documents\GitHub\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\obj\Debug\
+C:\Users\Crump\Documents\GitHub\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\obj\Debug\
 FurnitureStoreManagmentSystem
 none
 false
 DEBUG;TRACE
-C:\Users\cvoll\Documents\GitHub\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\App.xaml
+C:\Users\Crump\Documents\GitHub\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\FurnitureStoreManagmentSystem\App.xaml
 31449592772
 
 19-960824613
-32-1920311960
+32864769513
 Views\LoginWindow.xaml;Views\MainWindow.xaml;Views\RegisterCustomerWindow.xaml;
 
-True
+False
 
