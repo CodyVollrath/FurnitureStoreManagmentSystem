@@ -27,7 +27,7 @@ namespace FurnitureStoreManagmentSystem.Views
             this.DataContext = new LoginViewModel();
         }
 
-        public void Login_Click(object sender, RoutedEventArgs e) 
+        public void Login_Click(object sender, RoutedEventArgs e)
         {
             //Add Functionality to validate login
             var vm = (LoginViewModel)this.DataContext;
@@ -41,10 +41,20 @@ namespace FurnitureStoreManagmentSystem.Views
                 mainWindow.Show();
                 this.Close();
             }
-            else 
+            else
             {
                 this.lblError.Content = vm.ErrorMessage;
             }
+        }
+
+        public void UsernameField_Change(object sender, RoutedEventArgs e)
+        {
+            this.lblError.Content = "";
+        }
+
+        public void PasswordField_Change(object sender, RoutedEventArgs e)
+        {
+            this.lblError.Content = "";
         }
     }
 }

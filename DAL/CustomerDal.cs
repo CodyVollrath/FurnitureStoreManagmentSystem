@@ -32,8 +32,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                 command.Parameters.Add("@state", MySqlDbType.VarChar).Value = customer.State;
                 command.Parameters.Add("@zipcode", MySqlDbType.VarChar).Value = customer.ZipCode;
 
-                using MySqlDataReader reader = command.ExecuteReader();
-                reader.Read();
+                _ = command.ExecuteNonQuery();
             }
         }
     }

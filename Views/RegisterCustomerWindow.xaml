@@ -11,27 +11,27 @@
             <Label Content="Register Customer" Foreground="White" FontSize="25" HorizontalAlignment='Center'/>
             <Separator></Separator>
             <Label Content="First Name:" Foreground="White"/>
-            <TextBox x:Name="txtFName" Text="{Binding Path=CreatedCustomer.FirstName, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox x:Name="txtFName" Text="{Binding Path=CreatedCustomer.FirstName, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="Last Name:" Foreground="White"/>
-            <TextBox x:Name="txtLName" Text="{Binding Path=CreatedCustomer.LastName, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox x:Name="txtLName" Text="{Binding Path=CreatedCustomer.LastName, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="Gender:" Foreground="White"/>
-            <ComboBox Name="cmbGender" ItemsSource="{Binding Path=Genders}" SelectedItem="{Binding Mode=TwoWay, Path=CreatedCustomer.Gender}" MaxWidth="500"/>
+            <ComboBox Name="cmbGender" ItemsSource="{Binding Path=Genders}" SelectedItem="{Binding Mode=TwoWay, Path=CreatedCustomer.Gender}" SelectionChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="Birthday:" Foreground="White"/>
-            <DatePicker Name="dpBirthday" SelectedDate="{Binding Path=CreatedCustomer.BirthDay, Mode=TwoWay}" MaxWidth="500"/>
+            <DatePicker Name="dpBirthday" SelectedDate="{Binding Path=CreatedCustomer.BirthDay, Mode=TwoWay}" SelectedDateChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="Phone Number" Foreground="White"/>
-            <TextBox Name="txtPhoneNumber" Text="{Binding Path=CreatedCustomer.PhoneNumber, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox Name="txtPhoneNumber" Text="{Binding Path=CreatedCustomer.PhoneNumber, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="Address 1" Foreground="White"/>
-            <TextBox Name="txtAddress1" Text="{Binding Path=CreatedCustomer.Address1, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox Name="txtAddress1" Text="{Binding Path=CreatedCustomer.Address1, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="Address 2" Foreground="White"/>
-            <TextBox Name="txtAddress2" Text="{Binding Path=CreatedCustomer.Address2, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox Name="txtAddress2" Text="{Binding Path=CreatedCustomer.Address2, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="State" Foreground="White"/>
-            <ComboBox Name="cmbState" ItemsSource="{Binding Path=States}" SelectedItem="{Binding Mode=TwoWay, Path=CreatedCustomer.State}" MaxWidth="500"/>
+            <ComboBox Name="cmbState" ItemsSource="{Binding Path=States}" SelectedItem="{Binding Mode=TwoWay, Path=CreatedCustomer.State}" SelectionChanged="EmptyError_Change" MaxWidth="500"/>
             <Label Content="City" Foreground="White"/>
-            <TextBox Name="txtCity" Text="{Binding Path=CreatedCustomer.City, Mode=TwoWay}" MaxWidth="500"/>
-            <Label Content="Zip Code" Foreground="White"/>
-            <TextBox Name="txtZip" Text="{Binding Path=CreatedCustomer.ZipCode, Mode=TwoWay}" MaxWidth="500"/>
+            <TextBox Name="txtCity" Text="{Binding Path=CreatedCustomer.City, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
+            <Label Content="Zip-Code" Foreground="White"/>
+            <TextBox Name="txtZip" Text="{Binding Path=CreatedCustomer.ZipCode, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Button IsDefault="True" Name="btnSubmit" Content="Submit" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Register_Click" MaxWidth="200"/>
-            <Button Name="btnCancle" Content="Cancel" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Close_Click" MaxWidth="200"/>
+            <Button Name="btnCancle" Content="Cancle" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Close_Click" MaxWidth="200"/>
             <Label Name="lblError" HorizontalAlignment='Center' Foreground="Red"/>
         </StackPanel>
     </Border>

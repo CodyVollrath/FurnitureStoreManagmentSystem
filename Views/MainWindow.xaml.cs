@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 namespace FurnitureStoreManagmentSystem
 {
 
-  
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -30,13 +30,21 @@ namespace FurnitureStoreManagmentSystem
             this.DataContext = new MainViewModel();
             var fullName = $"{Singletons.CurrentEmployee.FirstName} {Singletons.CurrentEmployee.Lastname}";
             this.lblUserInfo.Content = String.Format(this.lblUserInfo.Content.ToString(), Singletons.CurrentEmployee.eId, Singletons.CurrentEmployee.Username, fullName);
-            
+
         }
 
-        public void RegisterCustomer_Click(object sender, RoutedEventArgs e) 
+        public void RegisterCustomer_Click(object sender, RoutedEventArgs e)
         {
             var registerCustomer = new RegisterCustomerWindow();
             registerCustomer.Show();
+            this.Close();
+        }
+
+        public void LogOut_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            Singletons.CurrentEmployee = null;
+            loginWindow.Show();
             this.Close();
         }
     }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -27,32 +28,37 @@ namespace FurnitureStoreManagmentSystem.Views
             this.DataContext = new CustomerRegistrationViewModel();
         }
 
-        public void Register_Click(object sender, RoutedEventArgs e) 
+        public void Register_Click(object sender, RoutedEventArgs e)
         {
             var vm = (CustomerRegistrationViewModel)this.DataContext;
             vm.UploadCustomer();
             if (!vm.hasError())
             {
-
                 this.goToMainAndClose();
             }
-            else 
+            else
             {
                 this.lblError.Content = vm.ErrorMessage;
             }
-            
+
         }
 
-        public void Close_Click(object sender, RoutedEventArgs e) 
+        public void Close_Click(object sender, RoutedEventArgs e)
         {
             this.goToMainAndClose();
         }
 
-        private void goToMainAndClose() 
+        public void EmptyError_Change(object sender, RoutedEventArgs e)
+        {
+            this.lblError.Content = "";
+        }
+
+        private void goToMainAndClose()
         {
             var mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
+
     }
 }

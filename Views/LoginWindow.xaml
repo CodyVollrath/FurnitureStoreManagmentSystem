@@ -11,10 +11,10 @@
             <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment='Center'/>
             <Separator></Separator>
             <Label Content="Username" Foreground="White"/>
-            <TextBox Name="txtUsername" Text ="{Binding Mode=TwoWay, Path=Username}" Background="#909090" Foreground="White" FontSize="18"/>
+            <TextBox Name="txtUsername" Text ="{Binding Mode=TwoWay, Path=Username}" TextChanged="UsernameField_Change" Background="#909090" Foreground="White" FontSize="18"/>
             <Label Content="Password" Foreground="White"/>
-            <PasswordBox Name="txtPassword" Background="#909090" Foreground="White" FontSize="18"/>
-            <Button IsDefault="True" Name="btnSubmit" Content="Submit" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Login_Click"/>
+            <PasswordBox Name="txtPassword" Background="#909090" Foreground="White" PasswordChanged="PasswordField_Change" FontSize="18" />
+            <Button IsDefault="True" Name="btnSubmit" Content="Submit" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18"  Click="Login_Click"/>
             <Label Name="lblError" HorizontalAlignment='Center' Foreground="Red"/>
         </StackPanel>
     </Border>
