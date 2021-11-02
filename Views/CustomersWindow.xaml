@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureStoreManagmentSystem.Views"
         mc:Ignorable="d"
-        Title="CustomersWindow" Height="558.845" Width="800">
+        Title="CustomersWindow" Height="558.845" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -19,18 +19,19 @@
         <StackPanel Grid.Column="0" Grid.Row="1">
             <Label Content="Customer Search" Margin="10" FontSize="20"/>
             <Label Content="Search By ID"/>
-            <TextBox x:Name="txtIdSearch" Text="{Binding Path=Id, Mode=TwoWay}" />
+            <TextBox x:Name="txtIdSearch" Text="{Binding Path=Id, Mode=TwoWay}" TextChanged="EmptyError_TextChanged" />
             <Label Content="Search By Full Name"/>
-            <TextBox x:Name="txtFullNameSearch" Text="{Binding Path=FullName, Mode=TwoWay}"/>
+            <TextBox x:Name="txtFullNameSearch" Text="{Binding Path=FullName, Mode=TwoWay}" TextChanged="EmptyError_TextChanged"/>
             <Label Content="Search By Phone Number"/>
-            <TextBox x:Name="txtPhoneNumSearch" Text="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+            <TextBox x:Name="txtPhoneNumSearch" Text="{Binding Path=PhoneNumber, Mode=TwoWay}" TextChanged="EmptyError_TextChanged"/>
             <Button IsDefault="True" Content="Search" Margin="10" Width="200" Click="SearchCustomer_Click"/>
             <Button Content="Back" Margin="10" Width="200" Click="Back_Click"/>
             <TextBlock Text="(Performs an OR search if more than one search field is populated)"/>
+            <TextBlock x:Name="lblError" FontSize="20" Foreground="Red" Text=""/>
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1">
             <Label Content="Search Results" Foreground="Black" Margin="10" FontSize="20"/>
-            <ListView x:Name="lstResults" SelectionMode="Single" ItemsSource="{Binding Path=CustomerSearchResults, Mode=TwoWay}" SelectedItem="{Binding Path=SelectedCustomer, Mode=TwoWay}" Height="211" Margin="10" HorizontalAlignment="Right" Width="360">
+            <ListView x:Name="lstResults" SelectionMode="Single" ItemsSource="{Binding Path=CustomerSearchResults, Mode=TwoWay}" SelectionChanged="lstResults_SelectionChanged" SelectedItem="{Binding Path=SelectedCustomer, Mode=TwoWay}" Height="211" Margin="10" HorizontalAlignment="Right" Width="360">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Customer Information">
                         <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="CID"/>
@@ -41,6 +42,7 @@
                 </ListView.View>
             </ListView>
             <Button Content="Edit Selected Customer" Width="200" Click="EditCustomer_Click"/>
+            <TextBlock x:Name="lblErrorSelectedCustomer" FontSize="20" Foreground="Red" Text=""/>
         </StackPanel>
     </Grid>
 </Window>

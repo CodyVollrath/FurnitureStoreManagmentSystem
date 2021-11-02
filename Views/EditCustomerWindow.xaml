@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureStoreManagmentSystem.Views"
         mc:Ignorable="d"
-        Title="EditCustomerWindow" Height="450" Width="800">
+        Title="EditCustomerWindow" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <StackPanel>
             <Label Content="Edit Customer" Foreground="Black" FontSize="25" HorizontalAlignment='Center'/>

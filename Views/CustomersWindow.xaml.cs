@@ -32,13 +32,19 @@ namespace FurnitureStoreManagmentSystem.Views
 
         public void SearchCustomer_Click(object sender, RoutedEventArgs e) 
         {
+            this.customerVM.ErrorLabel = "";
             this.customerVM.LoadSearchResults();
+            if (this.customerVM.HasError()) 
+            {
+                this.lblError.Text = this.customerVM.ErrorLabel;
+            }
         }
 
         public void EditCustomer_Click(object sender, RoutedEventArgs e) 
         {
             if (this.customerVM.SelectedCustomer == null) 
             {
+                this.lblErrorSelectedCustomer.Text = "Customer is not Selected";
                 return;
             }
 
@@ -52,6 +58,18 @@ namespace FurnitureStoreManagmentSystem.Views
             var mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
+        }
+
+        private void EmptyError_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this.lblErrorSelectedCustomer.Text = "";
+            this.lblError.Text = "";
+        }
+
+        private void lstResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            this.lblErrorSelectedCustomer.Text = "";
+            this.lblError.Text = "";
         }
     }
 }
