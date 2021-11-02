@@ -1,6 +1,7 @@
 ﻿using FurnitureStoreManagmentSystem.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -10,6 +11,12 @@ namespace FurnitureStoreManagmentSystem.Extensions
 {
     public static class CustomerValidation
     {
+        public static ObservableCollection<Customer> ConvertToObservable(this IEnumerable<Customer> customers) 
+        {
+            var observableCustomers = new ObservableCollection<Customer>(customers);
+            return observableCustomers;
+        }
+
         public static string ValidateCustomer(this Customer customer)
         {
             if (customer is null)

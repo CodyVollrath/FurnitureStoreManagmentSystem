@@ -40,6 +40,13 @@ namespace FurnitureStoreManagmentSystem
             this.Close();
         }
 
+        public void Customers_Click(object sender, RoutedEventArgs e) 
+        {
+            var customerWindow = new CustomersWindow();
+            customerWindow.Show();
+            this.Close();
+        }
+
         public void LogOut_Click(object sender, RoutedEventArgs e)
         {
             var loginWindow = new LoginWindow();

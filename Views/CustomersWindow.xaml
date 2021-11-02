@@ -1,0 +1,44 @@
+﻿<Window x:Class="FurnitureStoreManagmentSystem.Views.CustomersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FurnitureStoreManagmentSystem.Views"
+        mc:Ignorable="d"
+        Title="CustomersWindow" Height="558.845" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Customer Portal" Foreground="Black" FontSize="25" HorizontalAlignment='Center' Grid.Row="0" Grid.ColumnSpan="2"/>
+        <StackPanel Grid.Column="0" Grid.Row="1">
+            <Label Content="Customer Search" Margin="10" FontSize="20"/>
+            <Label Content="Search By ID"/>
+            <TextBox x:Name="txtIdSearch" Text="{Binding Path=Id, Mode=TwoWay}" />
+            <Label Content="Search By Full Name"/>
+            <TextBox x:Name="txtFullNameSearch" Text="{Binding Path=FullName, Mode=TwoWay}"/>
+            <Label Content="Search By Phone Number"/>
+            <TextBox x:Name="txtPhoneNumSearch" Text="{Binding Path=PhoneNumber, Mode=TwoWay}"/>
+            <Button IsDefault="True" Content="Search" Margin="10" Width="200" Click="SearchCustomer_Click"/>
+            <Button Content="Back" Margin="10" Width="200" Click="Back_Click"/>
+            <TextBlock Text="(Performs an OR search if more than one search field is populated)"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <Label Content="Search Results" Foreground="Black" Margin="10" FontSize="20"/>
+            <ListView x:Name="lstResults" ItemsSource="{Binding Path=CustomerSearchResults, Mode=TwoWay}" Height="211" Margin="10" HorizontalAlignment="Right" Width="360">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Customer Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding FirstName, Mode=TwoWay}" Header="First Name" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding LastName, Mode=TwoWay}" Header="Last Name" Width="100"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber, Mode=TwoWay}" Header="Phone Number" Width="100"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>

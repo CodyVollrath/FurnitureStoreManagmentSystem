@@ -16,6 +16,7 @@
                 <Label/>
                 <Label Content="Furniture Managment System" Foreground="White" FontSize="25" HorizontalAlignment='Center' Margin="218,0"/>
                 <Button Margin="261,20" Width="250" Content="Register Customer" Background="White" FontSize="20"  Click="RegisterCustomer_Click"/>
+                <Button Margin="261,20" Width="250" Content="Customers" Background="White" FontSize="20"  Click="Customers_Click"/>
             </StackPanel>
         </Border>
 
