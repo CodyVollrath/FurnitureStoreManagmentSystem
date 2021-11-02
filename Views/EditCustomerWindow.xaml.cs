@@ -28,10 +28,19 @@ namespace FurnitureStoreManagmentSystem.Views
             DataContext = this.editCustomerVM;
         }
 
+        private void EmptyError_Change(object sender, RoutedEventArgs e)
+        {
+            this.lblError.Text = "";
+        }
+
         private void Update_Click(object sender, RoutedEventArgs e)
         {
             this.editCustomerVM.UpdateCustomer();
-            this.GoBack();
+            
+            this.lblError.Text = this.editCustomerVM.ErrorLabel;
+            if (!this.editCustomerVM.HasError()) {
+                this.GoBack();
+            }
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e) 

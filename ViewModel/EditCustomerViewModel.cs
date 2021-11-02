@@ -1,10 +1,10 @@
 ﻿using FurnitureStoreManagmentSystem.DAL;
 using FurnitureStoreManagmentSystem.Models;
+using FurnitureStoreManagmentSystem.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FurnitureStoreManagmentSystem.ViewModel
 {
@@ -16,7 +16,7 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 
         public List<string> Genders { get; private set; }
         public List<string> States { get; private set; }
-        
+        public string ErrorLabel { get; set; } = "";
         public EditCustomerViewModel(int id) 
         {
             this.customerDal = new CustomerDal();
@@ -25,11 +25,13 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             this.States = Resources.Constants.States;
         }
 
-        public void UpdateCustomer() 
+        public void UpdateCustomer()
         {
-            this.customerDal.UpdateCustomer(this.SelectedCustomer);
-            int id = this.SelectedCustomer.Id;
-            this.GetCustomerById(id);
+            this.ErrorLabel = this.SelectedCustomer.ValidateCustomer();
+            if (!this.HasError()) 
+            {
+                this.customerDal.UpdateCustomer(this.SelectedCustomer);
+            }
         }
 
         private void GetCustomerById(int id) 
@@ -39,6 +41,10 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             {
                 throw new NullReferenceException("Selected customer does not exist in the database");
             }
+        }
+        public bool HasError()
+        {
+            return this.ErrorLabel != "";
         }
     }
 }
