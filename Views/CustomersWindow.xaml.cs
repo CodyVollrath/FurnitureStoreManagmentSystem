@@ -35,6 +35,18 @@ namespace FurnitureStoreManagmentSystem.Views
             this.customerVM.LoadSearchResults();
         }
 
+        public void EditCustomer_Click(object sender, RoutedEventArgs e) 
+        {
+            if (this.customerVM.SelectedCustomer == null) 
+            {
+                return;
+            }
+
+            var editCustomerWindow = new EditCustomerWindow(this.customerVM.SelectedCustomer.Id);
+            editCustomerWindow.Show();
+            this.Close();
+        }
+
         public void Back_Click(object sender, RoutedEventArgs e) 
         {
             var mainWindow = new MainWindow();

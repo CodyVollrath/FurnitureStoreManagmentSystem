@@ -116,15 +116,23 @@
     <Compile Include="Singletons.cs" />
     <Compile Include="ViewModel\CustomerRegistrationViewModel.cs" />
     <Compile Include="ViewModel\CustomersViewModel.cs" />
+    <Compile Include="ViewModel\EditCustomerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\CustomersWindow.xaml.cs">
       <DependentUpon>CustomersWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditCustomerWindow.xaml.cs">
+      <DependentUpon>EditCustomerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RegisterCustomerWindow.xaml.cs">
       <DependentUpon>RegisterCustomerWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CustomersWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
