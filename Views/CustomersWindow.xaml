@@ -30,15 +30,17 @@
         </StackPanel>
         <StackPanel Grid.Column="1" Grid.Row="1">
             <Label Content="Search Results" Foreground="Black" Margin="10" FontSize="20"/>
-            <ListView x:Name="lstResults" ItemsSource="{Binding Path=CustomerSearchResults, Mode=TwoWay}" Height="211" Margin="10" HorizontalAlignment="Right" Width="360">
+            <ListView x:Name="lstResults" SelectionMode="Single" ItemsSource="{Binding Path=CustomerSearchResults, Mode=TwoWay}" Height="211" Margin="10" HorizontalAlignment="Right" Width="360">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Customer Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="CID"/>
                         <GridViewColumn DisplayMemberBinding="{Binding FirstName, Mode=TwoWay}" Header="First Name" Width="100"/>
                         <GridViewColumn DisplayMemberBinding="{Binding LastName, Mode=TwoWay}" Header="Last Name" Width="100"/>
                         <GridViewColumn DisplayMemberBinding="{Binding PhoneNumber, Mode=TwoWay}" Header="Phone Number" Width="100"/>
                     </GridView>
                 </ListView.View>
             </ListView>
+            <Button Content="Edit Selected Customer" Width="200"/>
         </StackPanel>
     </Grid>
 </Window>
