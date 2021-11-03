@@ -31,7 +31,7 @@
             <Label Content="Zip-Code" Foreground="White"/>
             <TextBox Name="txtZip" Text="{Binding Path=CreatedCustomer.ZipCode, Mode=TwoWay}" TextChanged="EmptyError_Change" MaxWidth="500"/>
             <Button IsDefault="True" Name="btnSubmit" Content="Submit" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Register_Click" MaxWidth="200"/>
-            <Button Name="btnCancle" Content="Cancle" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Close_Click" MaxWidth="200"/>
+            <Button Name="btnCancel" Content="Cancel" Margin ="60 10" Background="#909090" Foreground="White" FontSize="18" Click="Close_Click" MaxWidth="200"/>
             <Label Name="lblError" HorizontalAlignment='Center' Foreground="Red"/>
         </StackPanel>
     </Border>
