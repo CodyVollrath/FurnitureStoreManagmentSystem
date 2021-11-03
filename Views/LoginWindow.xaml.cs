@@ -1,41 +1,33 @@
 ﻿using FurnitureStoreManagmentSystem.ViewModel;
-using FurnitureStoreManagmentSystem.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FurnitureStoreManagmentSystem.Views
 {
     /// <summary>
     /// Interaction logic for LoginWindow.xaml
     /// </summary>
+    /// <author>Cody Vollrath</author>
     public partial class LoginWindow : Window
     {
+
+        /// <summary>Initializes a new instance of the <see cref="LoginWindow" /> class.</summary>
         public LoginWindow()
         {
             InitializeComponent();
             this.DataContext = new LoginViewModel();
         }
 
+
+        /// <summary>Handles the Click event of the Login control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void Login_Click(object sender, RoutedEventArgs e)
         {
-            //Add Functionality to validate login
             var vm = (LoginViewModel)this.DataContext;
             vm.Password = txtPassword.Password;
             var employee = vm.AuthenticateEmployee();
-            if (!vm.hasError())
+            if (!vm.HasError())
             {
-                var mvm = new MainViewModel();
                 Singletons.CurrentEmployee = employee;
                 var mainWindow = new MainWindow();
                 mainWindow.Show();
@@ -47,11 +39,18 @@ namespace FurnitureStoreManagmentSystem.Views
             }
         }
 
+
+        /// <summary>Handles the Change event of the UsernameField control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void UsernameField_Change(object sender, RoutedEventArgs e)
         {
             this.lblError.Content = "";
         }
 
+        /// <summary>Handles the Change event of the PasswordField control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void PasswordField_Change(object sender, RoutedEventArgs e)
         {
             this.lblError.Content = "";

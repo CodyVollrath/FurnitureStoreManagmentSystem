@@ -22,17 +22,23 @@ namespace FurnitureStoreManagmentSystem
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    /// <action>Cody Vollrath</action>
     public partial class MainWindow : Window
     {
+
+        /// <summary>Initializes a new instance of the <see cref="MainWindow" /> class.</summary>
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
             var fullName = $"{Singletons.CurrentEmployee.FirstName} {Singletons.CurrentEmployee.Lastname}";
-            this.lblUserInfo.Content = String.Format(this.lblUserInfo.Content.ToString(), Singletons.CurrentEmployee.eId, Singletons.CurrentEmployee.Username, fullName);
+            this.lblUserInfo.Content = String.Format(this.lblUserInfo.Content.ToString(), Singletons.CurrentEmployee.Id, Singletons.CurrentEmployee.Username, fullName);
 
         }
 
+
+        /// <summary>Handles the Click event of the RegisterCustomer control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void RegisterCustomer_Click(object sender, RoutedEventArgs e)
         {
             var registerCustomer = new RegisterCustomerWindow();
@@ -40,6 +46,10 @@ namespace FurnitureStoreManagmentSystem
             this.Close();
         }
 
+
+        /// <summary>Handles the Click event of the Customers control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void Customers_Click(object sender, RoutedEventArgs e) 
         {
             var customerWindow = new CustomersWindow();
@@ -47,6 +57,10 @@ namespace FurnitureStoreManagmentSystem
             this.Close();
         }
 
+
+        /// <summary>Handles the Click event of the LogOut control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void LogOut_Click(object sender, RoutedEventArgs e)
         {
             var loginWindow = new LoginWindow();

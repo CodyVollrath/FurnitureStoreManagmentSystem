@@ -2,21 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem.Extensions
 {
-    public static class CustomerValidation
+
+    /// <summary>Handles Extensions for Customers</summary>
+    /// <author>Cody Vollrath</author>
+    public static class CustomerExtensions
     {
+
+        /// <summary>Converts an Enumerable collection of customers to an observable collection.</summary>
+        /// <param name="customers">The customers - the collection to be converted to an observable list.</param>
+        /// <returns>The observable collection of customers</returns>
         public static ObservableCollection<Customer> ConvertToObservable(this IEnumerable<Customer> customers) 
         {
             var observableCustomers = new ObservableCollection<Customer>(customers);
             return observableCustomers;
         }
 
+
+        /// <summary>Validates the customer fields.</summary>
+        /// <param name="customer">The customer - the customer to be validated.</param>
+        /// <returns>A string that indicates the field violation; Empty if no violation occurs</returns>
         public static string ValidateCustomer(this Customer customer)
         {
             if (customer is null)

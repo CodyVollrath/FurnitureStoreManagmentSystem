@@ -4,14 +4,18 @@ using FurnitureStoreManagmentSystem.Resources;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem.DAL
 {
+
+    /// <summary>Performs SQL operations on the Customer table</summary>
+    /// <author>Cody Vollrath</author>
+    /// <version>Fall 2021</version>
     public class CustomerDal
     {
+
+        /// <summary>Creates the customer in the database.</summary>
+        /// <param name="customer">The customer.</param>
         public void CreateCustomer(Customer customer)
         {
             using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
@@ -24,6 +28,11 @@ namespace FurnitureStoreManagmentSystem.DAL
                 _ = command.ExecuteNonQuery();
             }
         }
+
+
+        /// <summary>Gets the customers by id</summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>A list of the companies that could have that id (should only be one item)</returns>
         public IEnumerable<Customer> GetCustomersById(int id)
         {
             List<Customer> customerList = new List<Customer>();
@@ -38,6 +47,11 @@ namespace FurnitureStoreManagmentSystem.DAL
             return customerList;
         }
 
+
+        /// <summary>Gets the customers by fullname.</summary>
+        /// <param name="fullName">The full name.
+        /// (Must be delimited by a space)</param>
+        /// <returns>A list of customers with the last name and first name</returns>
         public IEnumerable<Customer> GetCustomerByFullname(string fullName) 
         {
             List<Customer> customerList = new List<Customer>();
@@ -55,6 +69,9 @@ namespace FurnitureStoreManagmentSystem.DAL
         }
 
 
+        /// <summary>Gets the customers by phone number.</summary>
+        /// <param name="phoneNumber">The phone number.</param>
+        /// <returns>A list of customers with the phone number</returns>
         public IEnumerable<Customer> GetCustomersByPhoneNumber(string phoneNumber)
         {
             List<Customer> customerList = new List<Customer>();
@@ -68,6 +85,10 @@ namespace FurnitureStoreManagmentSystem.DAL
             }
             return customerList;
         }
+
+
+        /// <summary>Updates the customer in the database.</summary>
+        /// <param name="customer">The customer.</param>
         public void UpdateCustomer(Customer customer) 
         {
             using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
@@ -84,6 +105,11 @@ namespace FurnitureStoreManagmentSystem.DAL
             }
         }
 
+
+        /// <summary>Gets the customers from a constructed command query.</summary>
+        /// <param name="command">The command.</param>
+        /// <param name="customerList">The customer list.</param>
+        /// <returns>A list of customers that correspond with the command delivered to the sql driver</returns>
         private List<Customer> GetCustomersByCommand(MySqlCommand command, List<Customer> customerList) 
         {
 
@@ -121,6 +147,12 @@ namespace FurnitureStoreManagmentSystem.DAL
             return customerList;
         }
 
+
+        /// <summary>Constructs a customer command from a query that uses all customer attributes except for id.</summary>
+        /// <param name="customer">The customer - the customer that populates the attributes value.</param>
+        /// <param name="query">The query - the query that contains the attributes.</param>
+        /// <param name="connection">The connection - The sql connection to the database.</param>
+        /// <returns>the command constructed from the query</returns>
         private MySqlCommand GetCustomerCommand(Customer customer, string query, MySqlConnection connection) 
         {
             using MySqlCommand command = new MySqlCommand(query, connection);

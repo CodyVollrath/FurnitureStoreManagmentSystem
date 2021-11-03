@@ -3,18 +3,31 @@ using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem.ViewModels
 {
+
+    /// <summary>The view model for the Customer registration window</summary>
+    /// <author>Cody Vollrath</author>
     public class CustomerRegistrationViewModel
     {
-        public CustomerDal customerDal { get; set; }
+
+        private CustomerDal customerDal { get; set; }
+
+        /// <summary>Gets or sets the created customer.</summary>
+        /// <value>The created customer.</value>
         public Customer CreatedCustomer { get; set; }
-        public List<string> Genders { get; set; }
-        public List<string> States { get; set; }
+
+        /// <summary>Gets the genders.</summary>
+        /// <value>The genders.</value>
+        public List<string> Genders { get; private set; }
+
+        /// <summary>Gets the states.</summary>
+        /// <value>The states.</value>
+        public List<string> States { get; private set; }
+
+        /// <summary>Gets or sets the error message.</summary>
+        /// <value>The error message.</value>
         public string ErrorMessage { get; set; } = "";
         public CustomerRegistrationViewModel()
         {
@@ -24,10 +37,12 @@ namespace FurnitureStoreManagmentSystem.ViewModels
             this.States = Resources.Constants.States;
         }
 
+
+        /// <summary>Uploads the customer.</summary>
         public void UploadCustomer() 
         {
             this.ErrorMessage = this.CreatedCustomer.ValidateCustomer();
-            if (this.hasError()) 
+            if (this.HasError()) 
             {
                 return;
             }
@@ -42,7 +57,10 @@ namespace FurnitureStoreManagmentSystem.ViewModels
             
         }
 
-        public bool hasError() 
+        /// <summary>Determines whether this instance has errors.</summary>
+        /// <returns>
+        ///   <c>true</c> if this instance has error; otherwise, <c>false</c>.</returns>
+        public bool HasError() 
         {
             return this.ErrorMessage != "";
         }

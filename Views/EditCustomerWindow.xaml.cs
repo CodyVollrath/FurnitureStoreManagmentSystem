@@ -1,26 +1,18 @@
 ﻿using FurnitureStoreManagmentSystem.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FurnitureStoreManagmentSystem.Views
 {
     /// <summary>
     /// Interaction logic for EditCustomerWindow.xaml
     /// </summary>
+    /// <author>Cody Vollrath</author>
     public partial class EditCustomerWindow : Window
     {
         private EditCustomerViewModel editCustomerVM { get; set; }
+
+        /// <summary>Initializes a new instance of the <see cref="EditCustomerWindow" /> class.</summary>
+        /// <param name="id">The identifier.</param>
         public EditCustomerWindow(int id)
         {
             this.editCustomerVM = new EditCustomerViewModel(id);

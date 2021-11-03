@@ -1,22 +1,26 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem.Extensions
 {
+
+    /// <summary>Extensions for common data reader operations</summary>
     public static class DataReaderExtensions
     {
+
+        /// <summary>Gets the field value and checks if null.</summary>
+        /// <typeparam name="T">The type</typeparam>
+        /// <param name="reader">The reade - the sql reader to determine the field value.</param>
+        /// <param name="colOrdinal">The col ordinal - the order value of the column.</param>
+        /// <returns>the value of the field</returns>
         public static T GetFieldValueCheckNull<T>(this MySqlDataReader reader, int colOrdinal) 
         {
-            T returnValue = default;
+            T fieldValue = default;
 
             if (!reader[colOrdinal].Equals(DBNull.Value)) {
-                returnValue = (T)reader[colOrdinal];
+                fieldValue = (T)reader[colOrdinal];
             }
-            return returnValue;
+            return fieldValue;
         }
     }
 }

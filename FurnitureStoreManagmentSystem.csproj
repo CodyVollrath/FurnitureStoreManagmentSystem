@@ -108,7 +108,7 @@
     </ApplicationDefinition>
     <Compile Include="DAL\CustomerDal.cs" />
     <Compile Include="DAL\EmployeeDal.cs" />
-    <Compile Include="Extensions\CustomerValidation.cs" />
+    <Compile Include="Extensions\CustomerExtensions.cs" />
     <Compile Include="Extensions\DataReaderExtensions.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -118,7 +118,6 @@
     <Compile Include="ViewModel\CustomersViewModel.cs" />
     <Compile Include="ViewModel\EditCustomerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="Views\CustomersWindow.xaml.cs">
       <DependentUpon>CustomersWindow.xaml</DependentUpon>
     </Compile>

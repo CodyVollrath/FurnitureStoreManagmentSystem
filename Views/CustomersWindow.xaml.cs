@@ -1,27 +1,19 @@
 ﻿using FurnitureStoreManagmentSystem.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace FurnitureStoreManagmentSystem.Views
 {
     /// <summary>
     /// Interaction logic for CustomersWindow.xaml
     /// </summary>
+    /// <author>Cody Vollrath</author>
     public partial class CustomersWindow : Window
     {
         private CustomersViewModel customerVM { get; set; }
 
+
+        /// <summary>Initializes a new instance of the <see cref="CustomersWindow" /> class.</summary>
         public CustomersWindow()
         {
             this.customerVM = new CustomersViewModel();
@@ -30,6 +22,10 @@ namespace FurnitureStoreManagmentSystem.Views
             
         }
 
+
+        /// <summary>Handles the Click event of the SearchCustomer control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void SearchCustomer_Click(object sender, RoutedEventArgs e) 
         {
             this.customerVM.ErrorLabel = "";
@@ -40,6 +36,10 @@ namespace FurnitureStoreManagmentSystem.Views
             }
         }
 
+
+        /// <summary>Handles the Click event of the EditCustomer control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void EditCustomer_Click(object sender, RoutedEventArgs e) 
         {
             if (this.customerVM.SelectedCustomer == null) 
@@ -53,6 +53,10 @@ namespace FurnitureStoreManagmentSystem.Views
             this.Close();
         }
 
+
+        /// <summary>Handles the Click event of the Back control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void Back_Click(object sender, RoutedEventArgs e) 
         {
             var mainWindow = new MainWindow();
@@ -60,12 +64,20 @@ namespace FurnitureStoreManagmentSystem.Views
             this.Close();
         }
 
+
+        /// <summary>Handles the TextChanged event of the EmptyError control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs" /> instance containing the event data.</param>
         private void EmptyError_TextChanged(object sender, TextChangedEventArgs e)
         {
             this.lblErrorSelectedCustomer.Text = "";
             this.lblError.Text = "";
         }
 
+
+        /// <summary>Handles the SelectionChanged event of the lstResults control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs" /> instance containing the event data.</param>
         private void lstResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.lblErrorSelectedCustomer.Text = "";

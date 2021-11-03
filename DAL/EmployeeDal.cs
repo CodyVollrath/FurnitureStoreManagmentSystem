@@ -2,16 +2,19 @@
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.Resources;
 using MySql.Data.MySqlClient;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem.DAL
 {
+
+    /// <summary>Performs SQL operations on the Employee table</summary>
+    /// <author>Cody Vollrath</author>
+    /// <version>Fall 2021</version>
     public class EmployeeDal
     {
+
+        /// <summary>Gets the employees from the database.</summary>
+        /// <returns>Employees</returns>
         public List<Employee> GetEmployees()
         {
             List<Employee> employeeList = new List<Employee>();
@@ -33,7 +36,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                     employeeList.Add(new Employee {
                         FirstName = reader.GetFieldValueCheckNull<string>(firstName),
                         Lastname = reader.GetFieldValueCheckNull<string>(lastName),
-                        eId = reader.GetFieldValueCheckNull<int>(eId),
+                        Id = reader.GetFieldValueCheckNull<int>(eId),
                         Username = reader.GetFieldValueCheckNull<string>(username),
                         Password = reader.GetFieldValueCheckNull<string>(password)
                     });
@@ -42,6 +45,10 @@ namespace FurnitureStoreManagmentSystem.DAL
             return employeeList;
         }
 
+        /// <summary>Authenticates the employee.</summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The employee that was authenticated</returns>
         public Employee AuthenticateEmployee(string username, string password) 
         {
             using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
@@ -63,7 +70,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                 {
                     employee = new Employee
                     {
-                        eId = reader.GetFieldValueCheckNull<int>(eIDOrdinal),
+                        Id = reader.GetFieldValueCheckNull<int>(eIDOrdinal),
                         FirstName = reader.GetFieldValueCheckNull<string>(firstNameOrdinal),
                         Lastname = reader.GetFieldValueCheckNull<string>(lastNameOrdinal),
                         Username = reader.GetFieldValueCheckNull<string>(usernameOrdinal)
