@@ -3,6 +3,7 @@ using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.Resources;
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 
 namespace FurnitureStoreManagmentSystem.DAL
 {

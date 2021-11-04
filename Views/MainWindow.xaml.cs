@@ -68,5 +68,25 @@ namespace FurnitureStoreManagmentSystem
             loginWindow.Show();
             this.Close();
         }
+
+        /// <summary>Handles the Click event of the LogOut control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        public void Furniture_Click(object sender, RoutedEventArgs e)
+        {
+            var furnitureWindow = new FurnitureWindow();
+            furnitureWindow.Show();
+            this.Close();
+        }
+
+        /// <summary>Handles the Click event of the LogOut control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        public void RentFurniture_Click(object sender, RoutedEventArgs e)
+        {
+            var rentFurnitureWindow = new RentFurnitureWindow();
+            rentFurnitureWindow.Show();
+            this.Close();
+        }
     }
 }
