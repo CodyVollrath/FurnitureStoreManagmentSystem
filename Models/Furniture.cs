@@ -1,13 +1,12 @@
-﻿using System;
-
-namespace FurnitureStoreManagmentSystem.Models
+﻿namespace FurnitureStoreManagmentSystem.Models
 {
-
     /// <summary>Represents an furniture object in the database</summary>
     /// <author>Daniel Crumpler</author>
     /// <version>Fall 2021</version>
     public class Furniture
     {
+        #region Properties
+
         /// <summary>Gets or sets the identifier.</summary>
         /// <value>The identifier.</value>
         public int Id { get; set; }
@@ -31,5 +30,7 @@ namespace FurnitureStoreManagmentSystem.Models
         /// <summary>Gets or sets the quantity.</summary>
         /// <value>The quantity.</value>
         public int Quantity { get; set; }
+
+        #endregion
     }
 }

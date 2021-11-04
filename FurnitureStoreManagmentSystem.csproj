@@ -152,9 +152,6 @@
     <Compile Include="Views\RegisterCustomerWindow.xaml.cs">
       <DependentUpon>RegisterCustomerWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RentFurnitureWindow.xaml.cs">
-      <DependentUpon>RentFurnitureWindow.xaml</DependentUpon>
-    </Compile>
     <Page Include="Views\CustomersWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -187,10 +184,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\RegisterCustomerWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RentFurnitureWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

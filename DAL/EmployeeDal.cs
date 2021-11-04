@@ -1,40 +1,40 @@
-﻿using FurnitureStoreManagmentSystem.Extensions;
+﻿using System.Collections.Generic;
+using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.Resources;
 using MySql.Data.MySqlClient;
-using System.Collections.Generic;
-using System.Data.SqlClient;
 
 namespace FurnitureStoreManagmentSystem.DAL
 {
-
     /// <summary>Performs SQL operations on the Employee table</summary>
     /// <author>Cody Vollrath</author>
     /// <version>Fall 2021</version>
     public class EmployeeDal
     {
+        #region Methods
 
         /// <summary>Gets the employees from the database.</summary>
         /// <returns>Employees</returns>
         public List<Employee> GetEmployees()
         {
-            List<Employee> employeeList = new List<Employee>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            var employeeList = new List<Employee>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
                 var query = "select * from employee";
-                using MySqlCommand command = new MySqlCommand(query, connection);
+                using var command = new MySqlCommand(query, connection);
 
-                using MySqlDataReader reader = command.ExecuteReader();
-                int eId = reader.GetOrdinal("eID");
-                int username = reader.GetOrdinal("username");
-                int password = reader.GetOrdinal("password");
-                int firstName = reader.GetOrdinal("firstName");
-                int lastName = reader.GetOrdinal("lastName");
+                using var reader = command.ExecuteReader();
+                var eId = reader.GetOrdinal("eID");
+                var username = reader.GetOrdinal("username");
+                var password = reader.GetOrdinal("password");
+                var firstName = reader.GetOrdinal("firstName");
+                var lastName = reader.GetOrdinal("lastName");
 
                 while (reader.Read())
                 {
-                    employeeList.Add(new Employee {
+                    employeeList.Add(new Employee
+                    {
                         FirstName = reader.GetFieldValueCheckNull<string>(firstName),
                         Lastname = reader.GetFieldValueCheckNull<string>(lastName),
                         Id = reader.GetFieldValueCheckNull<int>(eId),
@@ -43,6 +43,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                     });
                 }
             }
+
             return employeeList;
         }
 
@@ -50,24 +51,25 @@ namespace FurnitureStoreManagmentSystem.DAL
         /// <param name="username">The username.</param>
         /// <param name="password">The password.</param>
         /// <returns>The employee that was authenticated</returns>
-        public Employee AuthenticateEmployee(string username, string password) 
+        public Employee AuthenticateEmployee(string username, string password)
         {
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                string query = "select username, password, eID, firstName, lastName from employee where username = @username and password = @password";
+                var query =
+                    "select username, password, eID, firstName, lastName from employee where username = @username and password = @password";
 
-                using MySqlCommand command = new MySqlCommand(query, connection);
+                using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@username", MySqlDbType.VarChar).Value = username;
                 command.Parameters.Add("@password", MySqlDbType.VarChar).Value = password;
 
-                using MySqlDataReader reader = command.ExecuteReader();
-                int eIDOrdinal = reader.GetOrdinal("eID");
-                int usernameOrdinal = reader.GetOrdinal("username");
-                int firstNameOrdinal = reader.GetOrdinal("firstName");
-                int lastNameOrdinal = reader.GetOrdinal("lastName");
+                using var reader = command.ExecuteReader();
+                var eIDOrdinal = reader.GetOrdinal("eID");
+                var usernameOrdinal = reader.GetOrdinal("username");
+                var firstNameOrdinal = reader.GetOrdinal("firstName");
+                var lastNameOrdinal = reader.GetOrdinal("lastName");
                 Employee employee = null;
-                while (reader.Read()) 
+                while (reader.Read())
                 {
                     employee = new Employee
                     {
@@ -82,5 +84,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                 return employee;
             }
         }
+
+        #endregion
     }
 }

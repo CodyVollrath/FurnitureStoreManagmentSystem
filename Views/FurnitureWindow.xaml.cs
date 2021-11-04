@@ -1,35 +1,32 @@
-﻿using FurnitureStoreManagmentSystem.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+using FurnitureStoreManagmentSystem.ViewModel;
 
 namespace FurnitureStoreManagmentSystem.Views
 {
     /// <summary>
-    /// Interaction logic for FurnitureWindow.xaml
+    ///     Interaction logic for FurnitureWindow.xaml
     /// </summary>
     public partial class FurnitureWindow : Window
     {
-        private FurnitureViewModel furnitureVM { get; set; }
+        #region Properties
+
+        private FurnitureViewModel furnitureVM { get; }
+
+        #endregion
+
+        #region Constructors
 
         public FurnitureWindow()
         {
             this.furnitureVM = new FurnitureViewModel();
-            InitializeComponent();
+            this.InitializeComponent();
             DataContext = this.furnitureVM;
             this.furnitureVM.LoadSearchResults(this.searchBox.Text);
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Handles the Click event of the Back control.</summary>
         /// <param name="sender">The source of the event.</param>
@@ -38,12 +35,14 @@ namespace FurnitureStoreManagmentSystem.Views
         {
             var mainWindow = new MainWindow();
             mainWindow.Show();
-            this.Close();
+            Close();
         }
 
         public void Search_Click(object sender, RoutedEventArgs e)
         {
             this.lstResults.ItemsSource = this.furnitureVM.LoadSearchResults(this.searchBox.Text);
         }
+
+        #endregion
     }
 }

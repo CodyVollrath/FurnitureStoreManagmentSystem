@@ -6,22 +6,31 @@
         mc:Ignorable="d"
         Title="FurnitureWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="Back" Margin="10,10,730,380" Click="Back_Click"/>
-        <TextBlock Margin="0,25,0,0" TextWrapping="Wrap" Text="Furniture Portal" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="25"/>
-        <TextBlock x:Name="lblError" Margin="490,68,10,0" FontSize="15" Foreground="Red" Text=""  VerticalAlignment="Top" HorizontalAlignment="Center" Width="292"/>
-        <ListView x:Name="lstResults" SelectionMode="Single" ItemsSource="{Binding Path=FurnitureSearchResults, Mode=TwoWay}" Margin="0,88,10,10" HorizontalAlignment="Right" Width="772">
+        <Button Content="Back" Margin="10,10,730,380" Click="Back_Click" />
+        <TextBlock Margin="0,25,0,0" TextWrapping="Wrap" Text="Furniture Portal" VerticalAlignment="Top"
+                   HorizontalAlignment="Center" FontSize="25" />
+        <TextBlock x:Name="lblError" Margin="490,68,10,0" FontSize="15" Foreground="Red" Text=""
+                   VerticalAlignment="Top" HorizontalAlignment="Center" Width="292" />
+        <ListView x:Name="lstResults" SelectionMode="Single"
+                  ItemsSource="{Binding Path=FurnitureSearchResults, Mode=TwoWay}" Margin="0,88,10,10"
+                  HorizontalAlignment="Right" Width="772">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Furniture Information">
-                    <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="FID" Width="50"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding ItemName, Mode=TwoWay}" Header="Item Name" Width="150"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding ItemDescription, Mode=TwoWay}" Header="Item Description" Width="300"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding StyleName, Mode=TwoWay}" Header="Style Name" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding CategoryName, Mode=TwoWay}" Header="Category Name" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Quantity, Mode=TwoWay}" Header="Quantity" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="FID" Width="50" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ItemName, Mode=TwoWay}" Header="Item Name"
+                                    Width="150" />
+                    <GridViewColumn DisplayMemberBinding="{Binding ItemDescription, Mode=TwoWay}"
+                                    Header="Item Description" Width="300" />
+                    <GridViewColumn DisplayMemberBinding="{Binding StyleName, Mode=TwoWay}" Header="Style Name"
+                                    Width="100" />
+                    <GridViewColumn DisplayMemberBinding="{Binding CategoryName, Mode=TwoWay}" Header="Category Name"
+                                    Width="100" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Quantity, Mode=TwoWay}" Header="Quantity" Width="70" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Height="22" Margin="10,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text=""/>
-        <Button Content="Search" Margin="130,61,610,331" Click="Search_Click" FontSize="10"/>
+        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Height="22" Margin="10,61,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="120" Text="" />
+        <Button Content="Search" Margin="130,61,610,331" Click="Search_Click" FontSize="10" />
     </Grid>
 </Window>

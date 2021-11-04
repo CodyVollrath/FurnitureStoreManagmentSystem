@@ -1,14 +1,15 @@
 ﻿using FurnitureStoreManagmentSystem.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem
 {
     public static class Singletons
     {
+        #region Properties
+
         public static Employee CurrentEmployee { get; set; }
+
+        public static int CurrentTransaction { get; set; } = 0;
+
+        #endregion
     }
 }

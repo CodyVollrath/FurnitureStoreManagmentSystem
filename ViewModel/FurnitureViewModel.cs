@@ -1,13 +1,12 @@
-﻿using System;
-using FurnitureStoreManagmentSystem.DAL;
-using FurnitureStoreManagmentSystem.Models;
-using FurnitureStoreManagmentSystem.Extensions;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using JetBrains.Annotations;
-using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using FurnitureStoreManagmentSystem.DAL;
+using FurnitureStoreManagmentSystem.Extensions;
+using FurnitureStoreManagmentSystem.Models;
+using JetBrains.Annotations;
 
 namespace FurnitureStoreManagmentSystem.ViewModel
 {
@@ -15,8 +14,15 @@ namespace FurnitureStoreManagmentSystem.ViewModel
     /// <author>Daniel Crumpler</author>
     public class FurnitureViewModel
     {
-        private FurnitureDal furnitureDal { get; set; }
+        #region Data members
+
         private ObservableCollection<Furniture> furnitureSearchResults;
+
+        #endregion
+
+        #region Properties
+
+        private FurnitureDal FurnitureDal { get; }
 
         /// <summary>Gets or sets the error label.</summary>
         /// <value>The error label.</value>
@@ -26,38 +32,54 @@ namespace FurnitureStoreManagmentSystem.ViewModel
         /// <value>The customer search results.</value>
         public ObservableCollection<Furniture> FurnitureSearchResults
         {
-            get { return this.furnitureSearchResults; }
+            get => this.furnitureSearchResults;
             set
             {
-                furnitureSearchResults = value;
+                this.furnitureSearchResults = value;
                 this.OnPropertyChanged();
             }
         }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>Initializes a new instance of the <see cref="FurnitureViewModel" /> class.</summary>
         public FurnitureViewModel()
         {
-            this.furnitureDal = new FurnitureDal();
+            this.FurnitureDal = new FurnitureDal();
         }
 
-        public ObservableCollection<Furniture> LoadSearchResults(String search)
-        {
+        #endregion
 
-            List<Furniture> searchResults = new List<Furniture>();
-            var results = this.furnitureDal.GetFurniture();
+        #region Methods
+
+        public ObservableCollection<Furniture> LoadSearchResults(string search)
+        {
+            var searchResults = new List<Furniture>();
+            var results = this.FurnitureDal.GetFurniture();
             searchResults = searchResults.Concat(results).ToList();
-            List<Furniture> appendedResults = new List<Furniture>();
+            var appendedResults = new List<Furniture>();
             foreach (var fur in searchResults)
             {
-                if (fur.ItemName.ToLower().Contains(search.ToLower()) || fur.ItemDescription.ToLower().Contains(search.ToLower()) ||
-                    fur.StyleName.ToLower().Contains(search.ToLower()) || fur.CategoryName.ToLower().Contains(search.ToLower()) ||
-                    fur.Id.ToString().ToLower().Contains(search.ToLower()) || fur.Quantity.ToString().ToLower().Contains(search.ToLower()))
+                if (fur.ItemName.ToLower().Contains(search.ToLower()) ||
+                    fur.ItemDescription.ToLower().Contains(search.ToLower()) ||
+                    fur.StyleName.ToLower().Contains(search.ToLower()) ||
+                    fur.CategoryName.ToLower().Contains(search.ToLower()) ||
+                    fur.Id.ToString().ToLower().Contains(search.ToLower()) ||
+                    fur.Quantity.ToString().ToLower().Contains(search.ToLower()))
                 {
                     appendedResults.Add(fur);
                 }
             }
+
             this.FurnitureSearchResults = appendedResults.ConvertToObservable();
             return appendedResults.ConvertToObservable();
+        }
+
+        public void CreateTransaction(int cID)
+        {
+            this.FurnitureDal.CreateTransaction(Singletons.CurrentEmployee.Id, cID);
         }
 
         /// <summary>Occurs when [property changed].</summary>
@@ -70,5 +92,7 @@ namespace FurnitureStoreManagmentSystem.ViewModel
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        #endregion
     }
 }
