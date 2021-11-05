@@ -30,6 +30,7 @@ namespace FurnitureStoreManagmentSystem.Views
             this.InitializeComponent();
             this.CurrQuantity = currQuantity;
             this.lblQuestion.Text = "Enter a # to be Added:  Current # Available is " + this.CurrQuantity;
+            this.txtAnswer.Focus();
         }
 
         #endregion
