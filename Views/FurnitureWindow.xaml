@@ -10,8 +10,8 @@
         <TextBlock Margin="0,25,0,0" TextWrapping="Wrap" Text="Furniture Portal" VerticalAlignment="Top"
                    HorizontalAlignment="Center" FontSize="25" />
         <TextBlock x:Name="lblError" Margin="236,68,264,0" FontSize="15" Foreground="Red" Text=""
-                   VerticalAlignment="Top" HorizontalAlignment="Center" Width="292" />
-        <ListView x:Name="lstResults" SelectionMode="Single"
+                   VerticalAlignment="Top" HorizontalAlignment="Center" Width="292" LostFocus="Error_LostFocus" />
+        <ListView x:Name="lstResults" SelectionMode="Single" GotFocus="Error_LostFocus"
                   ItemsSource="{Binding Path=FurnitureSearchResults, Mode=TwoWay}" Margin="0,88,10,10"
                   HorizontalAlignment="Right" Width="772">
             <ListView.View>
@@ -31,7 +31,7 @@
         </ListView>
         <TextBox x:Name="searchBox" HorizontalAlignment="Left" Height="22" Margin="10,61,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="120" Text="" />
-        <Button Content="Search" Margin="130,61,610,331" Click="Search_Click" FontSize="10" />
+        <Button Content="Search" Margin="130,61,610,331" Click="Search_Click" FontSize="10" GotFocus="Error_LostFocus" />
         <Button Content="Add to Cart" HorizontalAlignment="Left" Margin="679,62,0,0" VerticalAlignment="Top"
                 Width="103" Height="24" Click="AddCart_Click" />
         <Button Content="Checkout" HorizontalAlignment="Left" Margin="679,12,0,0" VerticalAlignment="Top" Width="103"

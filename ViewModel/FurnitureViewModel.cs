@@ -77,9 +77,28 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             return appendedResults.ConvertToObservable();
         }
 
+        /// <summary>Creates the transaction.</summary>
+        /// <param name="cID">The customer identifier.</param>
         public void CreateTransaction(int cID)
         {
             this.FurnitureDal.CreateTransaction(Singletons.CurrentEmployee.Id, cID);
+        }
+
+        /// <summary>Creates the item check out.</summary>
+        /// <param name="fID">The furniture identifier.</param>
+        /// <param name="tID">The transaction identifier.</param>
+        /// <param name="quantity">The quantity.</param>
+        public void CreateItemCheckOut(int fID, int tID, int quantity)
+        {
+            this.FurnitureDal.CreateItemCheckOut(fID, tID, quantity);
+        }
+
+        /// <summary>Modifies the furniture quantity.</summary>
+        /// <param name="fID">The furniture identifier.</param>
+        /// <param name="quantity">The quantity.</param>
+        public void ModifyFurnitureQuantity(int fID, int quantity)
+        {
+            this.FurnitureDal.ModifyFurnitureQuantity(fID, quantity);
         }
 
         /// <summary>Occurs when [property changed].</summary>

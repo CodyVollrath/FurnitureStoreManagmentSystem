@@ -9,16 +9,22 @@ namespace FurnitureStoreManagmentSystem.Views
     {
         #region Properties
 
+        /// <summary>Gets or sets the quantity.</summary>
+        /// <value>The quantity.</value>
         public int Quantity { get; set; }
 
         private int CurrQuantity { get; }
 
+        /// <summary>Gets the answer.</summary>
+        /// <value>The answer.</value>
         public string Answer => this.txtAnswer.Text;
 
         #endregion
 
         #region Constructors
 
+        /// <summary>Initializes a new instance of the <see cref="QuantityDialog" /> class.</summary>
+        /// <param name="currQuantity">The current quantity available.</param>
         public QuantityDialog(int currQuantity)
         {
             this.InitializeComponent();
@@ -64,6 +70,7 @@ namespace FurnitureStoreManagmentSystem.Views
         private void btnDialogCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Quantity = 0;
+            Singletons.Quantity = this.Quantity;
             Close();
         }
 

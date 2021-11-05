@@ -55,16 +55,23 @@ namespace FurnitureStoreManagmentSystem.Views
         {
             if (this.lstResults.SelectedItem != null)
             {
-                var selectedFurniture = (Furniture)this.lstResults.SelectedItem;
+                var selectedFurniture = (Furniture) this.lstResults.SelectedItem;
                 var containsFurniture = false;
-                foreach (Furniture furn in Singletons.FurnitureCart)
+
+                foreach (var furn in Singletons.FurnitureCart)
                 {
                     if (furn.Id == selectedFurniture.Id)
                     {
                         containsFurniture = true;
                     }
                 }
-                if (!containsFurniture)
+
+                if (selectedFurniture.Quantity == 0)
+                {
+                    this.lblError.Text = "This item is out of stock";
+                    this.lblError.Focus();
+                }
+                else if (!containsFurniture)
                 {
                     var furniture = new Furniture
                     {
@@ -85,11 +92,13 @@ namespace FurnitureStoreManagmentSystem.Views
                 else
                 {
                     this.lblError.Text = "This item is already in the cart";
+                    this.lblError.Focus();
                 }
             }
             else
             {
                 this.lblError.Text = "An item must be selected to add to the cart";
+                this.lblError.Focus();
             }
         }
 
@@ -107,6 +116,7 @@ namespace FurnitureStoreManagmentSystem.Views
             else
             {
                 this.lblError.Text = "Please start a transaction";
+                this.lblError.Focus();
             }
         }
 
@@ -119,6 +129,11 @@ namespace FurnitureStoreManagmentSystem.Views
             popup.Show();
             popup.Focus();
             return task.Task;
+        }
+
+        private void Error_LostFocus(object sender, RoutedEventArgs e)
+        {
+            this.lblError.Text = "";
         }
 
         #endregion
