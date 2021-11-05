@@ -140,6 +140,9 @@
     <Compile Include="ViewModel\CustomersViewModel.cs" />
     <Compile Include="ViewModel\EditCustomerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="Views\CheckoutWindow.xaml.cs">
+      <DependentUpon>CheckoutWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CustomersWindow.xaml.cs">
       <DependentUpon>CustomersWindow.xaml</DependentUpon>
     </Compile>
@@ -149,9 +152,16 @@
     <Compile Include="Views\FurnitureWindow.xaml.cs">
       <DependentUpon>FurnitureWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\QuantityDialog.xaml.cs">
+      <DependentUpon>QuantityDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RegisterCustomerWindow.xaml.cs">
       <DependentUpon>RegisterCustomerWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\CheckoutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CustomersWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -183,6 +193,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\QuantityDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RegisterCustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

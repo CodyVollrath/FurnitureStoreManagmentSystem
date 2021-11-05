@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.ViewModel;
 
 namespace FurnitureStoreManagmentSystem.Views
@@ -103,6 +104,7 @@ namespace FurnitureStoreManagmentSystem.Views
             if (this.lstResults.SelectedItem != null)
             {
                 this.furnitureVM.CreateTransaction(this.customerVM.SelectedCustomer.Id);
+                Singletons.CurrentCustomer = (Customer) this.lstResults.SelectedItem;
                 this.tIDText.Text = "Current Transaction ID: " + Singletons.CurrentTransaction;
             }
             else
