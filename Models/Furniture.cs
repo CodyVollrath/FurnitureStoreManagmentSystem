@@ -31,6 +31,10 @@
         /// <value>The quantity.</value>
         public int Quantity { get; set; }
 
+        /// <summary>Gets or sets the price.</summary>
+        /// <value>The price.</value>
+        public double Price { get; set; }
+
         #endregion
     }
 }

@@ -17,6 +17,8 @@ namespace FurnitureStoreManagmentSystem
 
         public static int Quantity { get; set; } = 0;
 
+        public static double TotalCost { get; set; } = 0;
+
         #endregion
     }
 }

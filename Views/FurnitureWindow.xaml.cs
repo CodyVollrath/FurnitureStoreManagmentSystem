@@ -18,6 +18,7 @@ namespace FurnitureStoreManagmentSystem.Views
 
         #region Constructors
 
+        /// <summary>Initializes a new instance of the <see cref="FurnitureWindow" /> class.</summary>
         public FurnitureWindow()
         {
             this.furnitureVM = new FurnitureViewModel();
@@ -80,7 +81,8 @@ namespace FurnitureStoreManagmentSystem.Views
                         ItemDescription = selectedFurniture.ItemDescription,
                         ItemName = selectedFurniture.ItemName,
                         Quantity = selectedFurniture.Quantity,
-                        StyleName = selectedFurniture.StyleName
+                        StyleName = selectedFurniture.StyleName,
+                        Price = selectedFurniture.Price
                     };
                     await this.ShowPopup(new QuantityDialog(furniture.Quantity));
                     furniture.Quantity = Singletons.Quantity;

@@ -18,6 +18,8 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 
         private ObservableCollection<Furniture> furnitureSearchResults;
 
+        private ObservableCollection<Furniture> cart;
+
         #endregion
 
         #region Properties
@@ -28,14 +30,26 @@ namespace FurnitureStoreManagmentSystem.ViewModel
         /// <value>The error label.</value>
         public string ErrorLabel { get; set; } = "";
 
-        /// <summary>Gets or sets the customer search results.</summary>
-        /// <value>The customer search results.</value>
+        /// <summary>Gets or sets the furniture search results.</summary>
+        /// <value>The furniture search results.</value>
         public ObservableCollection<Furniture> FurnitureSearchResults
         {
             get => this.furnitureSearchResults;
             set
             {
                 this.furnitureSearchResults = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        /// <summary>Gets or sets the furniture cart.</summary>
+        /// <value>The furniture cart.</value>
+        public ObservableCollection<Furniture> Cart
+        {
+            get => this.cart;
+            set
+            {
+                this.cart = value;
                 this.OnPropertyChanged();
             }
         }
@@ -54,6 +68,11 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 
         #region Methods
 
+        /// <summary>Loads the search results.</summary>
+        /// <param name="search">The search.</param>
+        /// <returns>
+        ///     A observable furniture list
+        /// </returns>
         public ObservableCollection<Furniture> LoadSearchResults(string search)
         {
             var searchResults = new List<Furniture>();
@@ -67,7 +86,8 @@ namespace FurnitureStoreManagmentSystem.ViewModel
                     fur.StyleName.ToLower().Contains(search.ToLower()) ||
                     fur.CategoryName.ToLower().Contains(search.ToLower()) ||
                     fur.Id.ToString().ToLower().Contains(search.ToLower()) ||
-                    fur.Quantity.ToString().ToLower().Contains(search.ToLower()))
+                    fur.Quantity.ToString().ToLower().Contains(search.ToLower()) ||
+                    fur.Price.ToString().ToLower().Contains(search.ToLower()))
                 {
                     appendedResults.Add(fur);
                 }
@@ -75,6 +95,16 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 
             this.FurnitureSearchResults = appendedResults.ConvertToObservable();
             return appendedResults.ConvertToObservable();
+        }
+
+        /// <summary>Loads the cart.</summary>
+        /// <returns>
+        ///     A observable furniture list
+        /// </returns>
+        public ObservableCollection<Furniture> LoadCart()
+        {
+            this.Cart = Singletons.FurnitureCart.ConvertToObservable();
+            return Singletons.FurnitureCart.ConvertToObservable();
         }
 
         /// <summary>Creates the transaction.</summary>
@@ -99,6 +129,14 @@ namespace FurnitureStoreManagmentSystem.ViewModel
         public void ModifyFurnitureQuantity(int fID, int quantity)
         {
             this.FurnitureDal.ModifyFurnitureQuantity(fID, quantity);
+        }
+
+        /// <summary>Creates the rental transaction.</summary>
+        /// <param name="tID">The transaction identifier.</param>
+        /// <param name="cost">The cost.</param>
+        public void CreateRental(int tID, double cost)
+        {
+            this.FurnitureDal.CreateRental(tID, cost);
         }
 
         /// <summary>Occurs when [property changed].</summary>

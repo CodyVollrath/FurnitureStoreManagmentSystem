@@ -43,6 +43,20 @@ namespace FurnitureStoreManagmentSystem.DAL
             }
         }
 
+        /// <summary>Creates a rental based upon a transaction</summary>
+        public void CreateRental(int tID, double cost)
+        {
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query = "insert into rental (tID, estimatedCost, estimatedFees, rentalDate, dueDate) VALUES (@tID, @cost, 1.00, '2021-11-05', '2021-11-15')";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
+                command.Parameters.Add("@cost", MySqlDbType.VarChar).Value = cost;
+                _ = command.ExecuteNonQuery();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -76,6 +90,7 @@ namespace FurnitureStoreManagmentSystem.DAL
             var styleName = reader.GetOrdinal("styleName");
             var categoryName = reader.GetOrdinal("categoryName");
             var quantity = reader.GetOrdinal("quantity");
+            var price = reader.GetOrdinal("daily_rental_rate");
             while (reader.Read())
             {
                 furnitureList.Add(new Furniture
@@ -85,7 +100,8 @@ namespace FurnitureStoreManagmentSystem.DAL
                     ItemDescription = reader.GetFieldValueCheckNull<string>(itemDescription),
                     StyleName = reader.GetFieldValueCheckNull<string>(styleName),
                     CategoryName = reader.GetFieldValueCheckNull<string>(categoryName),
-                    Quantity = reader.GetFieldValueCheckNull<int>(quantity)
+                    Quantity = reader.GetFieldValueCheckNull<int>(quantity),
+                    Price = reader.GetFieldValueCheckNull<double>(price)
                 });
             }
 

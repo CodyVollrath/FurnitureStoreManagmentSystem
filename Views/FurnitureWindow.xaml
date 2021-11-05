@@ -20,12 +20,13 @@
                     <GridViewColumn DisplayMemberBinding="{Binding ItemName, Mode=TwoWay}" Header="Item Name"
                                     Width="150" />
                     <GridViewColumn DisplayMemberBinding="{Binding ItemDescription, Mode=TwoWay}"
-                                    Header="Item Description" Width="300" />
+                                    Header="Item Description" Width="225" />
                     <GridViewColumn DisplayMemberBinding="{Binding StyleName, Mode=TwoWay}" Header="Style Name"
                                     Width="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding CategoryName, Mode=TwoWay}" Header="Category Name"
                                     Width="100" />
                     <GridViewColumn DisplayMemberBinding="{Binding Quantity, Mode=TwoWay}" Header="Quantity" Width="70" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Price, Mode=TwoWay}" Header="Price" Width="70" />
                 </GridView>
             </ListView.View>
         </ListView>

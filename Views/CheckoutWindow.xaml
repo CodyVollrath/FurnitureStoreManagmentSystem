@@ -4,15 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CheckoutWindow" Height="450" Width="400">
+        Title="CheckoutWindow" Height="475" Width="420">
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Height="419" Margin="0,0,-8,0" VerticalAlignment="Top" Width="400">
+        <StackPanel HorizontalAlignment="Left" Height="444" VerticalAlignment="Top" Width="412">
             <Button Content="Back" Click="Back_Click" Margin="10,10,0,10" Width="75" Height="25"
                     HorizontalAlignment="Left" />
             <TextBlock x:Name="customerText" Text="Customer: Full Name and ID" HorizontalAlignment="Center"
                        Margin="0,0,0,5" />
             <TextBlock x:Name="transactionText" Text="Transaction: ID" HorizontalAlignment="Center" Margin="0,0,0,5" />
-            <TextBlock x:Name="priceText" Text="Price: #" HorizontalAlignment="Center" Margin="0,0,0,5" />
+            <Button Content="Remove" Click="Remove_Click" Margin="0,0,10,0" Width="75" Height="25"
+                    HorizontalAlignment="Right" />
+            <ListView x:Name="lstResults" SelectionMode="Single"
+                      ItemsSource="{Binding Path=Cart, Mode=TwoWay}"
+                      HorizontalAlignment="Center" Width="370" Height="242" Margin="10,0">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Furniture Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="FID" Width="50" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ItemName, Mode=TwoWay}" Header="Item Name"
+                                        Width="190" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Quantity, Mode=TwoWay}" Header="Quantity"
+                                        Width="60" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Price, Mode=TwoWay}" Header="Price" Width="60" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock x:Name="priceText" Text="Price: #" HorizontalAlignment="Center" Margin="0,20,0,5" />
             <Button Content="Complete Checkout" HorizontalAlignment="Center" VerticalAlignment="Top" Width="133"
                     Height="32" Margin="0,0,0,20" Click="Checkout_Click" />
         </StackPanel>
