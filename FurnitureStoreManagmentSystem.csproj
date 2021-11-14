@@ -134,6 +134,7 @@
     <Compile Include="Models\Furniture.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Resources\Constants.cs" />
+    <Compile Include="Resources\Hasher.cs" />
     <Compile Include="Singletons.cs" />
     <Compile Include="ViewModel\FurnitureViewModel.cs" />
     <Compile Include="ViewModel\CustomerRegistrationViewModel.cs" />

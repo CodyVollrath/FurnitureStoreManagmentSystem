@@ -1,5 +1,7 @@
 ﻿using FurnitureStoreManagmentSystem.DAL;
 using FurnitureStoreManagmentSystem.Models;
+using FurnitureStoreManagmentSystem.Resources;
+using System;
 
 namespace FurnitureStoreManagmentSystem.ViewModel
 {
@@ -53,6 +55,7 @@ namespace FurnitureStoreManagmentSystem.ViewModel
                 this.ErrorMessage = "Password is not entered";
                 return null;
             }
+            this.Password = Hasher.Encrypt(this.Password);
             var employee = this.EmployeeDal.AuthenticateEmployee(this.Username, this.Password);
 
             if (employee == null) 
