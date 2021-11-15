@@ -18,6 +18,7 @@ namespace FurnitureStoreManagmentSystem
             var fullName = $"{Singletons.CurrentEmployee.FirstName} {Singletons.CurrentEmployee.Lastname}";
             this.lblUserInfo.Content = string.Format(this.lblUserInfo.Content.ToString(), Singletons.CurrentEmployee.Id,
                 Singletons.CurrentEmployee.Username, fullName);
+            this.btnAdmin.Visibility = Singletons.CurrentEmployee.IsAdmin ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #endregion
@@ -55,6 +56,20 @@ namespace FurnitureStoreManagmentSystem
             Close();
         }
 
+        /// <summary>
+        /// The admin portal click event
+        /// </summary>
+        /// <param name="sender">The widget that invoked this</param>
+        /// <param name="e">The event arguments if any</param>
+        public void AdminPortal_Click(object sender, RoutedEventArgs e) 
+        {
+            //TODO Make admin portal window
+            var adminPanel = new AdminPortalWindow();
+            adminPanel.Show();
+            this.Close();
+        }
+
+
         /// <summary>Handles the Click event of the LogOut control.</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
@@ -62,7 +77,7 @@ namespace FurnitureStoreManagmentSystem
         {
             var furnitureWindow = new FurnitureWindow();
             furnitureWindow.Show();
-            Close();
+            this.Close();
         }
 
         #endregion

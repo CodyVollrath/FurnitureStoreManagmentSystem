@@ -24,5 +24,11 @@ namespace FurnitureStoreManagmentSystem.Models
         /// <summary>Gets or sets the lastname.</summary>
         /// <value>The lastname.</value>
         public string Lastname { get; set; }
+
+        /// <summary>
+        /// Gets or sets the IsAdmin.
+        /// </summary>
+        /// <value>The true or false indicator for admin status</value>
+        public bool IsAdmin { get; set; }
     }
 }

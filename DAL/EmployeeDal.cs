@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.Resources;
@@ -30,6 +31,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                 var password = reader.GetOrdinal("password");
                 var firstName = reader.GetOrdinal("firstName");
                 var lastName = reader.GetOrdinal("lastName");
+                var isAdmin = reader.GetOrdinal("admin");
 
                 while (reader.Read())
                 {
@@ -39,7 +41,8 @@ namespace FurnitureStoreManagmentSystem.DAL
                         Lastname = reader.GetFieldValueCheckNull<string>(lastName),
                         Id = reader.GetFieldValueCheckNull<int>(eId),
                         Username = reader.GetFieldValueCheckNull<string>(username),
-                        Password = reader.GetFieldValueCheckNull<string>(password)
+                        Password = reader.GetFieldValueCheckNull<string>(password),
+                        IsAdmin = reader.GetFieldValueCheckNull<int>(isAdmin) == 1
                     });
                 }
             }
@@ -57,7 +60,7 @@ namespace FurnitureStoreManagmentSystem.DAL
             {
                 connection.Open();
                 var query =
-                    "select username, password, eID, firstName, lastName from employee where username = @username and password = @password";
+                    "select username, password, eID, firstName, lastName, admin from employee where username = @username and password = @password";
 
                 using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@username", MySqlDbType.VarChar).Value = username;
@@ -68,6 +71,7 @@ namespace FurnitureStoreManagmentSystem.DAL
                 var usernameOrdinal = reader.GetOrdinal("username");
                 var firstNameOrdinal = reader.GetOrdinal("firstName");
                 var lastNameOrdinal = reader.GetOrdinal("lastName");
+                var isAdmin = reader.GetOrdinal("admin");
                 Employee employee = null;
                 while (reader.Read())
                 {
@@ -76,7 +80,8 @@ namespace FurnitureStoreManagmentSystem.DAL
                         Id = reader.GetFieldValueCheckNull<int>(eIDOrdinal),
                         FirstName = reader.GetFieldValueCheckNull<string>(firstNameOrdinal),
                         Lastname = reader.GetFieldValueCheckNull<string>(lastNameOrdinal),
-                        Username = reader.GetFieldValueCheckNull<string>(usernameOrdinal)
+                        Username = reader.GetFieldValueCheckNull<string>(usernameOrdinal),
+                        IsAdmin = reader.GetFieldValueCheckNull<int>(isAdmin) == 1
                     };
                     break;
                 }

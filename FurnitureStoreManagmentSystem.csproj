@@ -124,6 +124,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DAL\AdminDal.cs" />
     <Compile Include="DAL\CustomerDal.cs" />
     <Compile Include="DAL\FurnitureDal.cs" />
     <Compile Include="DAL\EmployeeDal.cs" />
@@ -136,11 +137,15 @@
     <Compile Include="Resources\Constants.cs" />
     <Compile Include="Resources\Hasher.cs" />
     <Compile Include="Singletons.cs" />
+    <Compile Include="ViewModel\AdminPortalViewModel.cs" />
     <Compile Include="ViewModel\FurnitureViewModel.cs" />
     <Compile Include="ViewModel\CustomerRegistrationViewModel.cs" />
     <Compile Include="ViewModel\CustomersViewModel.cs" />
     <Compile Include="ViewModel\EditCustomerViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="Views\AdminPortalWindow.xaml.cs">
+      <DependentUpon>AdminPortalWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CheckoutWindow.xaml.cs">
       <DependentUpon>CheckoutWindow.xaml</DependentUpon>
     </Compile>
@@ -159,6 +164,10 @@
     <Compile Include="Views\RegisterCustomerWindow.xaml.cs">
       <DependentUpon>RegisterCustomerWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\AdminPortalWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CheckoutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

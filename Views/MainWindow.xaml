@@ -12,6 +12,7 @@
                 <Label x:Name="lblUserInfo" Content="Employee ID: {0} | Username: {1} | Employee name: {2}"
                        Foreground="White" FontSize="15" />
                 <Button Content="Log Out" Margin="362,0,312,0" Width="100" Click="LogOut_Click" />
+                <Button x:Name="btnAdmin" Content="Admin Portal" Margin="362,0,312,0" Width="100" Click="AdminPortal_Click"/>
                 <Separator />
                 <Label />
                 <Label Content="Furniture Managment System" Foreground="White" FontSize="25"
@@ -22,6 +23,7 @@
                         Click="Customers_Click" />
                 <Button Margin="261,20" Width="250" Content="Furniture" Background="White" FontSize="20"
                         Click="Furniture_Click" />
+                
             </StackPanel>
         </Border>
 
