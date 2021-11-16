@@ -13,21 +13,29 @@ namespace FurnitureStoreManagmentSystem.DAL
         public static string AdminCommand(string query) 
         {
             var output = "";
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
+            try
             {
-                connection.Open();
-                using MySqlCommand command = new MySqlCommand(query, connection);
-                using MySqlDataReader reader = command.ExecuteReader();
-                
-                while (reader.Read()) 
+                using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
                 {
-                    for (int i = 0; i < reader.FieldCount; i++) 
+                    connection.Open();
+                    using MySqlCommand command = new MySqlCommand(query, connection);
+                    using MySqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
                     {
-                        output += $"{reader[i]} ";
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            output += $"{reader[i]} ";
+                        }
+                        output += "\n";
                     }
-                    output += "\n";
                 }
             }
+            catch(Exception exception)
+            {
+                output = exception.Message;
+            }
+
             return output;
         }
     }

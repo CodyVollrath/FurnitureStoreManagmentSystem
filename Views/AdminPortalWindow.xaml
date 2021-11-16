@@ -13,14 +13,17 @@
             <ColumnDefinition Width="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
+        <TextBlock Text="Sql Terminal" Grid.Column="1" Grid.Row="0"/>
         <TextBox TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="{Binding Command, Mode=TwoWay}" Background="Black" FontSize="20" Foreground="White" Grid.Column="1" Grid.Row="1"></TextBox>
         <Button x:Name="btnSubmit" Content="Submit" Click="Submit_Click" Grid.Column="1" Grid.Row="2"/>
-        <TextBox VerticalScrollBarVisibility="Visible" x:Name="txtOutput" FontSize="15" IsEnabled="False" Background="DarkGray" Foreground="DarkMagenta" Grid.Column="1" Grid.Row="3"></TextBox>
+        <TextBlock Text="Output Terminal" Grid.Column="1" Grid.Row="3"/>
+        <TextBox VerticalScrollBarVisibility="Visible" x:Name="txtOutput" FontSize="15"  Background="DarkGray" Foreground="DarkMagenta" Grid.Column="1" Grid.Row="4"></TextBox>
     </Grid>
 </Window>
