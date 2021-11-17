@@ -148,14 +148,6 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             this.FurnitureDal.CreateItemCheckOut(fID, tID, quantity);
         }
 
-        /// <summary>Modifies the furniture quantity.</summary>
-        /// <param name="fID">The furniture identifier.</param>
-        /// <param name="quantity">The quantity.</param>
-        public void ModifyFurnitureQuantity(int fID, int quantity)
-        {
-            this.FurnitureDal.ModifyFurnitureQuantity(fID, quantity);
-        }
-
         /// <summary>Creates the rental transaction.</summary>
         /// <param name="tID">The transaction identifier.</param>
         /// <param name="cost">The cost.</param>

@@ -60,7 +60,6 @@ namespace FurnitureStoreManagmentSystem.Views
             foreach (var furniture in Singletons.FurnitureCart)
             {
                 this.furnitureVM.CreateItemCheckOut(furniture.Id, Singletons.CurrentTransaction, furniture.Quantity);
-                this.furnitureVM.ModifyFurnitureQuantity(furniture.Id, furniture.Quantity);
             }
 
             this.furnitureVM.CreateRental(Singletons.CurrentTransaction, Singletons.TotalCost);

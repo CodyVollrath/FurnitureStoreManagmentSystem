@@ -13,20 +13,25 @@ namespace FurnitureStoreManagmentSystem.DAL
     {
         #region Methods
 
-
-        //TODO Use Transactions/Procedures and roleback if any single query fails
-        //See lecutre 16 notes for more info and my example in admin on how to use procedures properly in c#
         /// <summary>Creates a new item_check_out based upon a piece of furniture, quantity, and transaction</summary>
         public void CreateItemCheckOut(int fID, int tID, int quantity)
         {
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                var query = "insert into item_check_out (fID, tID, fQuantity) VALUES (@fID, @tID, @fQuantity)";
-                using var command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@fID", MySqlDbType.VarChar).Value = fID;
-                command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
-                command.Parameters.Add("@fQuantity", MySqlDbType.VarChar).Value = quantity;
+                using MySqlCommand command = new MySqlCommand("create_item_checkout", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.Add("@fIDp", MySqlDbType.Int32);
+                command.Parameters["@fIDp"].Value = fID;
+                command.Parameters["@fIDp"].Direction = System.Data.ParameterDirection.Input;
+
+                command.Parameters.Add("@tIDp", MySqlDbType.Int32);
+                command.Parameters["@tIDp"].Value = tID;
+                command.Parameters["@tIDp"].Direction = System.Data.ParameterDirection.Input;
+
+                command.Parameters.Add("@fQuantityp", MySqlDbType.Int32);
+                command.Parameters["@fQuantityp"].Value = quantity;
+                command.Parameters["@fQuantityp"].Direction = System.Data.ParameterDirection.Input;
                 _ = command.ExecuteNonQuery();
             }
         }
