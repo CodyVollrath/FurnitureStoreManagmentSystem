@@ -57,10 +57,6 @@ namespace FurnitureStoreManagmentSystem.DAL
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Gets all of the furniture from a constructed command query.</summary>
         /// <returns>A list of furniture that correspond with the command delivered to the sql driver</returns>
         public IEnumerable<Furniture> GetFurniture()
@@ -119,10 +115,116 @@ namespace FurnitureStoreManagmentSystem.DAL
                 command.Parameters.Add("@eID", MySqlDbType.VarChar).Value = eID;
                 command.Parameters.Add("@cID", MySqlDbType.VarChar).Value = cID;
                 _ = command.ExecuteNonQuery();
-                Singletons.CurrentTransaction = (int) command.LastInsertedId;
+                Singletons.CurrentTransaction = (int)command.LastInsertedId;
+            }
+        }
+
+        public IEnumerable<string> GetCategories() 
+        {
+            List<string> categories = new List<string>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString)) 
+            {
+                connection.Open();
+                var query = "select categoryName from category";
+                using var command = new MySqlCommand(query, connection);
+                var reader = command.ExecuteReader();
+                var categoryName = reader.GetOrdinal("categoryName");
+                while (reader.Read()) 
+                {
+                    categories.Add(reader.GetFieldValueCheckNull<string>(categoryName));
+                }
             }
 
-            #endregion
+            return categories;
         }
+        public IEnumerable<Furniture> GetFurnituresById(int id) 
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
+            {
+                connection.Open();
+                string query = "select * from furniture where fID = @id";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+
+        public IEnumerable<Furniture> GetFurnituresByName(string name) 
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
+            {
+                connection.Open();
+                string query = "select * from furniture where itemName = @name";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+
+        public IEnumerable<Furniture> GetFurnituresByStyleName(string styleName) 
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                string query = "select * from furniture where styleName = @styleName";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@styleName", MySqlDbType.VarChar).Value = styleName;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+
+        public IEnumerable<Furniture> GetFurnituresByCategoryName(string categoryName) 
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                string query = "select * from furniture where categoryName = @categoryName";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = categoryName;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+
+        public IEnumerable<string> GetStyles()
+        {
+            List<string> styles = new List<string>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query = "select styleName from style";
+                using var command = new MySqlCommand(query, connection);
+                var reader = command.ExecuteReader();
+                var styleName = reader.GetOrdinal("styleName");
+                while (reader.Read())
+                {
+                    styles.Add(reader.GetFieldValueCheckNull<string>(styleName));
+                }
+            }
+            return styles;
+        }
+
+        #endregion
+
+        #region Searchs
+        public IEnumerable<Furniture> SearchFurniture(Furniture furniture) 
+        {
+            List<Customer> customerList = new List<Customer>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
+            {
+                connection.Open();
+                
+            }
+                return null;
+        }
+        #endregion
+
     }
 }

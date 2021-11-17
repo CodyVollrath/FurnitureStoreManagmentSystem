@@ -24,7 +24,6 @@ namespace FurnitureStoreManagmentSystem.Views
             this.furnitureVM = new FurnitureViewModel();
             this.InitializeComponent();
             DataContext = this.furnitureVM;
-            this.furnitureVM.LoadSearchResults(this.searchBox.Text);
         }
 
         #endregion
@@ -46,7 +45,10 @@ namespace FurnitureStoreManagmentSystem.Views
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void Search_Click(object sender, RoutedEventArgs e)
         {
-            this.lstResults.ItemsSource = this.furnitureVM.LoadSearchResults(this.searchBox.Text);
+            var furnitureVm = this.furnitureVM;
+            var searchDialog = new FurnitureSearchFilterDialog(ref furnitureVm);
+            searchDialog.ShowDialog();
+            this.lstResults.ItemsSource = furnitureVm.FurnitureSearchResults;
         }
 
         /// <summary>Handles the Click event of the Add Cart control.</summary>
