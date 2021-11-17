@@ -13,6 +13,9 @@ namespace FurnitureStoreManagmentSystem.DAL
     {
         #region Methods
 
+
+        //TODO Use Transactions/Procedures and roleback if any single query fails
+        //See lecutre 16 notes for more info and my example in admin on how to use procedures properly in c#
         /// <summary>Creates a new item_check_out based upon a piece of furniture, quantity, and transaction</summary>
         public void CreateItemCheckOut(int fID, int tID, int quantity)
         {
@@ -73,36 +76,6 @@ namespace FurnitureStoreManagmentSystem.DAL
             return furnitureList;
         }
 
-        /// <summary>Gets the furniture from a constructed command query.</summary>
-        /// <param name="command">The command.</param>
-        /// <param name="furnitureList">The customer list.</param>
-        /// <returns>A list of furniture that correspond with the command delivered to the sql driver</returns>
-        private List<Furniture> GetFurnitureByCommand(MySqlCommand command, List<Furniture> furnitureList)
-        {
-            using var reader = command.ExecuteReader();
-            var fId = reader.GetOrdinal("fID");
-            var itemName = reader.GetOrdinal("itemName");
-            var itemDescription = reader.GetOrdinal("itemDescription");
-            var styleName = reader.GetOrdinal("styleName");
-            var categoryName = reader.GetOrdinal("categoryName");
-            var quantity = reader.GetOrdinal("quantity");
-            var price = reader.GetOrdinal("daily_rental_rate");
-            while (reader.Read())
-            {
-                furnitureList.Add(new Furniture
-                {
-                    Id = reader.GetFieldValueCheckNull<int>(fId),
-                    ItemName = reader.GetFieldValueCheckNull<string>(itemName),
-                    ItemDescription = reader.GetFieldValueCheckNull<string>(itemDescription),
-                    StyleName = reader.GetFieldValueCheckNull<string>(styleName),
-                    CategoryName = reader.GetFieldValueCheckNull<string>(categoryName),
-                    Quantity = reader.GetFieldValueCheckNull<int>(quantity),
-                    Price = reader.GetFieldValueCheckNull<double>(price)
-                });
-            }
-
-            return furnitureList;
-        }
 
         /// <summary>Creates a new transaction based upon a selected customer</summary>
         public void CreateTransaction(int eID, int cID)
@@ -137,61 +110,7 @@ namespace FurnitureStoreManagmentSystem.DAL
 
             return categories;
         }
-        public IEnumerable<Furniture> GetFurnituresById(int id) 
-        {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
-            {
-                connection.Open();
-                string query = "select * from furniture where fID = @id";
-                using MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
-                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
-            }
-            return furnitureList;
-        }
 
-        public IEnumerable<Furniture> GetFurnituresByName(string name) 
-        {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
-            {
-                connection.Open();
-                string query = "select * from furniture where itemName = @name";
-                using MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
-                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
-            }
-            return furnitureList;
-        }
-
-        public IEnumerable<Furniture> GetFurnituresByStyleName(string styleName) 
-        {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
-            {
-                connection.Open();
-                string query = "select * from furniture where styleName = @styleName";
-                using MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@styleName", MySqlDbType.VarChar).Value = styleName;
-                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
-            }
-            return furnitureList;
-        }
-
-        public IEnumerable<Furniture> GetFurnituresByCategoryName(string categoryName) 
-        {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
-            {
-                connection.Open();
-                string query = "select * from furniture where categoryName = @categoryName";
-                using MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = categoryName;
-                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
-            }
-            return furnitureList;
-        }
 
         public IEnumerable<string> GetStyles()
         {
@@ -214,15 +133,93 @@ namespace FurnitureStoreManagmentSystem.DAL
         #endregion
 
         #region Searchs
-        public IEnumerable<Furniture> SearchFurniture(Furniture furniture) 
+        public IEnumerable<Furniture> GetFurnituresById(int id)
         {
-            List<Customer> customerList = new List<Customer>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString)) 
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                
+                string query = "select * from furniture where fID = @id";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
             }
-                return null;
+            return furnitureList;
+        }
+
+        public IEnumerable<Furniture> GetFurnituresByName(string name)
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                string query = "select * from furniture where itemName = @name";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+
+        public IEnumerable<Furniture> GetFurnituresByStyleName(string styleName)
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                string query = "select * from furniture where styleName = @styleName";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@styleName", MySqlDbType.VarChar).Value = styleName;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+
+        public IEnumerable<Furniture> GetFurnituresByCategoryName(string categoryName)
+        {
+            List<Furniture> furnitureList = new List<Furniture>();
+            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                string query = "select * from furniture where categoryName = @categoryName";
+                using MySqlCommand command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = categoryName;
+                furnitureList = this.GetFurnitureByCommand(command, furnitureList);
+            }
+            return furnitureList;
+        }
+        #endregion
+
+        #region Private helpers
+        /// <summary>Gets the furniture from a constructed command query.</summary>
+        /// <param name="command">The command.</param>
+        /// <param name="furnitureList">The customer list.</param>
+        /// <returns>A list of furniture that correspond with the command delivered to the sql driver</returns>
+        private List<Furniture> GetFurnitureByCommand(MySqlCommand command, List<Furniture> furnitureList)
+        {
+            using var reader = command.ExecuteReader();
+            var fId = reader.GetOrdinal("fID");
+            var itemName = reader.GetOrdinal("itemName");
+            var itemDescription = reader.GetOrdinal("itemDescription");
+            var styleName = reader.GetOrdinal("styleName");
+            var categoryName = reader.GetOrdinal("categoryName");
+            var quantity = reader.GetOrdinal("quantity");
+            var price = reader.GetOrdinal("daily_rental_rate");
+            while (reader.Read())
+            {
+                furnitureList.Add(new Furniture
+                {
+                    Id = reader.GetFieldValueCheckNull<int>(fId),
+                    ItemName = reader.GetFieldValueCheckNull<string>(itemName),
+                    ItemDescription = reader.GetFieldValueCheckNull<string>(itemDescription),
+                    StyleName = reader.GetFieldValueCheckNull<string>(styleName),
+                    CategoryName = reader.GetFieldValueCheckNull<string>(categoryName),
+                    Quantity = reader.GetFieldValueCheckNull<int>(quantity),
+                    Price = reader.GetFieldValueCheckNull<double>(price)
+                });
+            }
+
+            return furnitureList;
         }
         #endregion
 

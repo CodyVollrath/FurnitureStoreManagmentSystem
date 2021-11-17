@@ -41,14 +41,32 @@ namespace FurnitureStoreManagmentSystem.DAL
             using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                string query = "call CreateEmployee(@eID, @username, @password, @firstName, @lastName, @admin)";
-                using MySqlCommand command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@eID", MySqlDbType.Int32).Value = employee.Id;
-                command.Parameters.Add("@username", MySqlDbType.VarChar).Value = employee.Username.ToLower();
-                command.Parameters.Add("@password", MySqlDbType.VarChar).Value = Hasher.Encrypt(employee.Password);
-                command.Parameters.Add("@firstName", MySqlDbType.VarChar).Value = employee.FirstName;
-                command.Parameters.Add("@lastName", MySqlDbType.VarChar).Value = employee.Lastname;
-                command.Parameters.Add("@admin", MySqlDbType.Int32).Value = employee.IsAdmin ? 1 : 0;
+                using MySqlCommand command = new MySqlCommand("CreateEmployee", connection);
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.Parameters.Add("@eID", MySqlDbType.Int32);
+                command.Parameters["@eID"].Value = employee.Id;
+                command.Parameters["@eID"].Direction = System.Data.ParameterDirection.Input;
+
+                command.Parameters.Add("@username", MySqlDbType.VarChar);
+                command.Parameters["@username"].Value = employee.Username.ToLower();
+                command.Parameters["@username"].Direction = System.Data.ParameterDirection.Input;
+
+                command.Parameters.Add("@password", MySqlDbType.VarChar);
+                command.Parameters["@password"].Value = Hasher.Encrypt(employee.Password);
+                command.Parameters["@password"].Direction = System.Data.ParameterDirection.Input;
+
+                command.Parameters.Add("@firstName", MySqlDbType.VarChar);
+                command.Parameters["@firstName"].Value = employee.FirstName;
+                command.Parameters["@firstName"].Direction = System.Data.ParameterDirection.Input;
+
+
+                command.Parameters.Add("@lastName", MySqlDbType.VarChar);
+                command.Parameters["@lastName"].Value = employee.Lastname;
+                command.Parameters["@lastName"].Direction = System.Data.ParameterDirection.Input;
+
+                command.Parameters.Add("@admin", MySqlDbType.Int32);
+                command.Parameters["@admin"].Value = employee.IsAdmin ? 1 : 0;
+                command.Parameters["@admin"].Direction = System.Data.ParameterDirection.Input;
                 _ = command.ExecuteNonQuery();
             }
         }
