@@ -27,7 +27,6 @@ namespace FurnitureStoreManagmentSystem.Views
             this.furnitureVm = furnitureVm;
             DataContext = furnitureVm;
         }
-
         private void btnSearh_Click(object sender, RoutedEventArgs e)
         {
             //Perform search results

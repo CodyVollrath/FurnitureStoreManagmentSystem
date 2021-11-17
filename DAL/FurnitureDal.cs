@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 namespace FurnitureStoreManagmentSystem.DAL
 {
     /// <summary>Performs SQL operations on the Furniture table</summary>
-    /// <author>Daniel Crumpler</author>
+    /// <author>Daniel Crumpler & Cody Vollrath</author>
     /// <version>Fall 2021</version>
     public class FurnitureDal
     {
@@ -116,7 +116,10 @@ namespace FurnitureStoreManagmentSystem.DAL
             return categories;
         }
 
-
+        /// <summary>
+        /// Gets the style names from the styles table
+        /// </summary>
+        /// <returns>An enumerated list of style names</returns>
         public IEnumerable<string> GetStyles()
         {
             List<string> styles = new List<string>();
@@ -138,6 +141,11 @@ namespace FurnitureStoreManagmentSystem.DAL
         #endregion
 
         #region Searchs
+        /// <summary>
+        /// Gets a list of furnitures by the id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresById(int id)
         {
             List<Furniture> furnitureList = new List<Furniture>();
@@ -151,7 +159,11 @@ namespace FurnitureStoreManagmentSystem.DAL
             }
             return furnitureList;
         }
-
+        /// <summary>
+        /// Gets a list of furnitures by the itme name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresByName(string name)
         {
             List<Furniture> furnitureList = new List<Furniture>();
@@ -166,6 +178,11 @@ namespace FurnitureStoreManagmentSystem.DAL
             return furnitureList;
         }
 
+        /// <summary>
+        /// Gets a list of furnitures by the style name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresByStyleName(string styleName)
         {
             List<Furniture> furnitureList = new List<Furniture>();
@@ -180,6 +197,11 @@ namespace FurnitureStoreManagmentSystem.DAL
             return furnitureList;
         }
 
+        /// <summary>
+        /// Gets a list of furnitures by the category name
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresByCategoryName(string categoryName)
         {
             List<Furniture> furnitureList = new List<Furniture>();

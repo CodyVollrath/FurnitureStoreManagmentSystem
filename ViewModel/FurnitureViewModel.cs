@@ -121,6 +121,10 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             }
 
             this.FurnitureSearchResults = searchResults.ConvertToObservable();
+            this.FurnitureId = string.Empty;
+            this.Name = string.Empty;
+            this.Style = string.Empty;
+            this.Category = string.Empty;
         }
 
         private void ValidateFields() 
