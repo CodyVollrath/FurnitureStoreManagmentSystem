@@ -33,5 +33,12 @@ namespace FurnitureStoreManagmentSystem.Views
             this.adminPortalVM.SendCommand();
             this.txtOutput.Text = this.adminPortalVM.Output;
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainWindow();
+            this.Close();
+            mainWindow.Show();
+        }
     }
 }
