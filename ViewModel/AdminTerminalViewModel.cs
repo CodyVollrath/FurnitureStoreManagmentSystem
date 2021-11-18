@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace FurnitureStoreManagmentSystem.ViewModel
 {
-    public class AdminPortalViewModel
+    public class AdminTerminalViewModel
     {
 
         public string Command { get; set; } = "";
 
         public string Output { get; set; } = "";
 
-        public AdminPortalViewModel() 
+        public AdminTerminalViewModel() 
         {
 
         }

@@ -1,5 +1,4 @@
-﻿using FurnitureStoreManagmentSystem.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,25 +19,15 @@ namespace FurnitureStoreManagmentSystem.Views
     /// </summary>
     public partial class AdminPortalWindow : Window
     {
-        private AdminPortalViewModel adminPortalVM;
         public AdminPortalWindow()
         {
             InitializeComponent();
-            this.adminPortalVM = new AdminPortalViewModel();
-            DataContext = adminPortalVM;
         }
 
-        private void Submit_Click(object sender, RoutedEventArgs e)
+        private void btnSql_Click(object sender, RoutedEventArgs e)
         {
-            this.adminPortalVM.SendCommand();
-            this.txtOutput.Text = this.adminPortalVM.Output;
-        }
-
-        private void btnBack_Click(object sender, RoutedEventArgs e)
-        {
-            var mainWindow = new MainWindow();
-            this.Close();
-            mainWindow.Show();
+            var terminal = new AdminTerminalWindow();
+            terminal.Show();
         }
     }
 }
