@@ -33,8 +33,6 @@
         <Button Content="Search Dialog" Margin="75,10,642,380" Click="Search_Click" FontSize="10" GotFocus="Error_LostFocus" />
         <Button Content="Checkout" HorizontalAlignment="Left" Margin="679,8,0,0" VerticalAlignment="Top" Width="103"
                 Height="24" Click="Checkout_Click" />
-        <Button Margin="679,33,18,0" Width="103"
-                Height="24" VerticalAlignment="Top" Content="Register Furniture"/>
         <Button Content="Add to Cart" HorizontalAlignment="Left" Margin="679,57,0,0" VerticalAlignment="Top"
                 Width="103" Height="24" Click="AddCart_Click" />
     </Grid>
