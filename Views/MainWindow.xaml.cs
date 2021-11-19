@@ -57,18 +57,17 @@ namespace FurnitureStoreManagmentSystem
         }
 
         /// <summary>
-        /// The admin portal click event
+        ///     The admin portal click event
         /// </summary>
         /// <param name="sender">The widget that invoked this</param>
         /// <param name="e">The event arguments if any</param>
-        public void AdminPortal_Click(object sender, RoutedEventArgs e) 
+        public void AdminPortal_Click(object sender, RoutedEventArgs e)
         {
             //TODO Make admin portal window
             var adminPanel = new AdminPortalWindow();
             adminPanel.Show();
-            this.Close();
+            Close();
         }
-
 
         /// <summary>Handles the Click event of the LogOut control.</summary>
         /// <param name="sender">The source of the event.</param>
@@ -77,7 +76,7 @@ namespace FurnitureStoreManagmentSystem
         {
             var furnitureWindow = new FurnitureWindow();
             furnitureWindow.Show();
-            this.Close();
+            Close();
         }
 
         #endregion

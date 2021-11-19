@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.Resources;
@@ -19,48 +21,36 @@ namespace FurnitureStoreManagmentSystem.DAL
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                using MySqlCommand command = new MySqlCommand("create_item_checkout", connection);
-                command.CommandType = System.Data.CommandType.StoredProcedure;
+                using var command = new MySqlCommand("create_item_checkout", connection);
+                command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.Add("@fIDp", MySqlDbType.Int32);
                 command.Parameters["@fIDp"].Value = fID;
-                command.Parameters["@fIDp"].Direction = System.Data.ParameterDirection.Input;
+                command.Parameters["@fIDp"].Direction = ParameterDirection.Input;
 
                 command.Parameters.Add("@tIDp", MySqlDbType.Int32);
                 command.Parameters["@tIDp"].Value = tID;
-                command.Parameters["@tIDp"].Direction = System.Data.ParameterDirection.Input;
+                command.Parameters["@tIDp"].Direction = ParameterDirection.Input;
 
                 command.Parameters.Add("@fQuantityp", MySqlDbType.Int32);
                 command.Parameters["@fQuantityp"].Value = quantity;
-                command.Parameters["@fQuantityp"].Direction = System.Data.ParameterDirection.Input;
-                _ = command.ExecuteNonQuery();
-            }
-        }
-
-        /// <summary>Modifies the current furniture quantity</summary>
-        public void ModifyFurnitureQuantity(int fID, int quantity)
-        {
-            using (var connection = new MySqlConnection(Constants.ConnectionString))
-            {
-                connection.Open();
-                var query =
-                    "UPDATE furniture SET quantity = (SELECT furniture.quantity WHERE fID = @fID) - @fQuantity WHERE fID = @fID";
-                using var command = new MySqlCommand(query, connection);
-                command.Parameters.Add("@fID", MySqlDbType.VarChar).Value = fID;
-                command.Parameters.Add("@fQuantity", MySqlDbType.VarChar).Value = quantity;
+                command.Parameters["@fQuantityp"].Direction = ParameterDirection.Input;
                 _ = command.ExecuteNonQuery();
             }
         }
 
         /// <summary>Creates a rental based upon a transaction</summary>
-        public void CreateRental(int tID, double cost)
+        public void CreateRental(int tID, double cost, DateTime date)
         {
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                var query = "insert into rental (tID, estimatedCost, estimatedFees, rentalDate, dueDate) VALUES (@tID, @cost, 1.00, '2021-11-05', '2021-11-15')";
+                var query =
+                    "insert into rental (tID, estimatedCost, estimatedFees, rentalDate, dueDate) VALUES (@tID, @cost, 1.00, @DATE, @SelectedDate)";
                 using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
                 command.Parameters.Add("@cost", MySqlDbType.VarChar).Value = cost;
+                command.Parameters.Add("@DATE", MySqlDbType.VarChar).Value = DateTime.Now.ToString("yyyy-MM-dd");
+                command.Parameters.Add("@SelectedDate", MySqlDbType.VarChar).Value = date.ToString("yyyy-MM-dd");
                 _ = command.ExecuteNonQuery();
             }
         }
@@ -81,7 +71,6 @@ namespace FurnitureStoreManagmentSystem.DAL
             return furnitureList;
         }
 
-
         /// <summary>Creates a new transaction based upon a selected customer</summary>
         public void CreateTransaction(int eID, int cID)
         {
@@ -93,21 +82,21 @@ namespace FurnitureStoreManagmentSystem.DAL
                 command.Parameters.Add("@eID", MySqlDbType.VarChar).Value = eID;
                 command.Parameters.Add("@cID", MySqlDbType.VarChar).Value = cID;
                 _ = command.ExecuteNonQuery();
-                Singletons.CurrentTransaction = (int)command.LastInsertedId;
+                Singletons.CurrentTransaction = (int) command.LastInsertedId;
             }
         }
 
-        public IEnumerable<string> GetCategories() 
+        public IEnumerable<string> GetCategories()
         {
-            List<string> categories = new List<string>();
-            using (var connection = new MySqlConnection(Constants.ConnectionString)) 
+            var categories = new List<string>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
                 var query = "select categoryName from category";
                 using var command = new MySqlCommand(query, connection);
                 var reader = command.ExecuteReader();
                 var categoryName = reader.GetOrdinal("categoryName");
-                while (reader.Read()) 
+                while (reader.Read())
                 {
                     categories.Add(reader.GetFieldValueCheckNull<string>(categoryName));
                 }
@@ -116,13 +105,14 @@ namespace FurnitureStoreManagmentSystem.DAL
             return categories;
         }
 
-        internal List<Furniture> GetFurnitureInRentals(int id)
+        public List<Furniture> GetFurnitureInRentals(int id)
         {
             var furnitureList = new List<Furniture>();
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                var query = "select * from furniture, item_check_out where item_check_out.fID=furniture.fID and item_check_out.tID=@id";
+                var query =
+                    "select * from furniture, item_check_out where item_check_out.fID=furniture.fID and item_check_out.tID=@id and fQuantity>0";
                 using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
                 furnitureList = this.GetFurnitureByCommandWithIDs(command, furnitureList);
@@ -131,13 +121,89 @@ namespace FurnitureStoreManagmentSystem.DAL
             return furnitureList;
         }
 
-        public List<int> GetRentals(int id)
+        public void ReturnItems(int fID, int tID, int fQuantity, int currentTransaction)
         {
-            List<int> rentals = new List<int>();
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                var query = "select item_check_out.tID from transaction, item_check_out where transaction.cID=@id and transaction.tID=item_check_out.tID GROUP BY item_check_out.tID";
+                var query =
+                    "insert into item_check_in (fID, tID, fQuantity, returnTID) VALUES (@fID, @tID, @fQuantity, @returnTID)";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@fID", MySqlDbType.VarChar).Value = fID;
+                command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
+                command.Parameters.Add("@fQuantity", MySqlDbType.VarChar).Value = fQuantity;
+                command.Parameters.Add("@returnTID", MySqlDbType.VarChar).Value = currentTransaction;
+                _ = command.ExecuteNonQuery();
+            }
+
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query =
+                    "UPDATE item_check_out SET fQuantity = (SELECT item_check_out.fQuantity WHERE fID = @fID) - @fQuantity WHERE fID = @fID AND tID = @tID";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@fID", MySqlDbType.VarChar).Value = fID;
+                command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
+                command.Parameters.Add("@fQuantity", MySqlDbType.VarChar).Value = fQuantity;
+                _ = command.ExecuteNonQuery();
+            }
+
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query =
+                    "UPDATE furniture SET quantity = (SELECT furniture.quantity WHERE fID = @fID) + @fQuantity WHERE fID = @fID";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@fID", MySqlDbType.VarChar).Value = fID;
+                command.Parameters.Add("@fQuantity", MySqlDbType.VarChar).Value = fQuantity;
+                _ = command.ExecuteNonQuery();
+            }
+        }
+
+        public double DetermineLateFees(int tID)
+        {
+            var diff = 0;
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query =
+                    "SELECT datediff(CURRENT_DATE, rental.dueDate) as diff FROM rental WHERE `tID`=@tID";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
+                var reader = command.ExecuteReader();
+                var value = reader.GetOrdinal("diff");
+                while (reader.Read())
+                {
+                    diff = reader.GetFieldValueCheckNull<int>(value);
+                }
+            }
+
+            return diff;
+        }
+
+        public void CreateReturn(int tID, double fees)
+        {
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query =
+                    "insert into `return` (tID, returnDate, lateFees) VALUES (@tID, @DATE, @fees)";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@tID", MySqlDbType.VarChar).Value = tID;
+                command.Parameters.Add("@DATE", MySqlDbType.VarChar).Value = DateTime.Now.ToString("yyyy-MM-dd");
+                command.Parameters.Add("@fees", MySqlDbType.VarChar).Value = fees;
+                _ = command.ExecuteNonQuery();
+            }
+        }
+
+        public List<int> GetRentals(int id)
+        {
+            var rentals = new List<int>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query =
+                    "select item_check_out.tID from transaction, item_check_out where transaction.cID=@id and transaction.tID=item_check_out.tID and fQuantity>0 GROUP BY item_check_out.tID";
                 using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
                 var reader = command.ExecuteReader();
@@ -152,12 +218,12 @@ namespace FurnitureStoreManagmentSystem.DAL
         }
 
         /// <summary>
-        /// Gets the style names from the styles table
+        ///     Gets the style names from the styles table
         /// </summary>
         /// <returns>An enumerated list of style names</returns>
         public IEnumerable<string> GetStyles()
         {
-            List<string> styles = new List<string>();
+            var styles = new List<string>();
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
@@ -170,89 +236,98 @@ namespace FurnitureStoreManagmentSystem.DAL
                     styles.Add(reader.GetFieldValueCheckNull<string>(styleName));
                 }
             }
+
             return styles;
         }
 
         #endregion
 
         #region Searchs
+
         /// <summary>
-        /// Gets a list of furnitures by the id
+        ///     Gets a list of furnitures by the id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresById(int id)
         {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            var furnitureList = new List<Furniture>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                string query = "select * from furniture where fID = @id";
-                using MySqlCommand command = new MySqlCommand(query, connection);
+                var query = "select * from furniture where fID = @id";
+                using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
                 furnitureList = this.GetFurnitureByCommand(command, furnitureList);
             }
+
             return furnitureList;
         }
+
         /// <summary>
-        /// Gets a list of furnitures by the itme name
+        ///     Gets a list of furnitures by the itme name
         /// </summary>
         /// <param name="id"></param>
         /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresByName(string name)
         {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            var furnitureList = new List<Furniture>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                string query = "select * from furniture where itemName = @name";
-                using MySqlCommand command = new MySqlCommand(query, connection);
+                var query = "select * from furniture where itemName = @name";
+                using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@name", MySqlDbType.VarChar).Value = name;
                 furnitureList = this.GetFurnitureByCommand(command, furnitureList);
             }
+
             return furnitureList;
         }
 
         /// <summary>
-        /// Gets a list of furnitures by the style name
+        ///     Gets a list of furnitures by the style name
         /// </summary>
         /// <param name="id"></param>
         /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresByStyleName(string styleName)
         {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            var furnitureList = new List<Furniture>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                string query = "select * from furniture where styleName = @styleName";
-                using MySqlCommand command = new MySqlCommand(query, connection);
+                var query = "select * from furniture where styleName = @styleName";
+                using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@styleName", MySqlDbType.VarChar).Value = styleName;
                 furnitureList = this.GetFurnitureByCommand(command, furnitureList);
             }
+
             return furnitureList;
         }
 
         /// <summary>
-        /// Gets a list of furnitures by the category name
+        ///     Gets a list of furnitures by the category name
         /// </summary>
         /// <param name="id"></param>
         /// <returns>An enumerated list of furniture</returns>
         public IEnumerable<Furniture> GetFurnituresByCategoryName(string categoryName)
         {
-            List<Furniture> furnitureList = new List<Furniture>();
-            using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+            var furnitureList = new List<Furniture>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
                 connection.Open();
-                string query = "select * from furniture where categoryName = @categoryName";
-                using MySqlCommand command = new MySqlCommand(query, connection);
+                var query = "select * from furniture where categoryName = @categoryName";
+                using var command = new MySqlCommand(query, connection);
                 command.Parameters.Add("@categoryName", MySqlDbType.VarChar).Value = categoryName;
                 furnitureList = this.GetFurnitureByCommand(command, furnitureList);
             }
+
             return furnitureList;
         }
+
         #endregion
 
         #region Private helpers
+
         /// <summary>Gets the furniture from a constructed command query.</summary>
         /// <param name="command">The command.</param>
         /// <param name="furnitureList">The customer list.</param>
@@ -314,7 +389,7 @@ namespace FurnitureStoreManagmentSystem.DAL
 
             return furnitureList;
         }
-        #endregion
 
+        #endregion
     }
 }

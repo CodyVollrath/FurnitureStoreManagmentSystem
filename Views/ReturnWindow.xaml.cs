@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.ViewModel;
+using Org.BouncyCastle.Asn1.X9;
 
 namespace FurnitureStoreManagmentSystem.Views
 {
@@ -13,11 +14,15 @@ namespace FurnitureStoreManagmentSystem.Views
     /// </summary>
     public partial class ReturnWindow : Window
     {
+        #region Data members
+
+        private readonly List<int> transactionComboList;
+
+        #endregion
+
         #region Properties
 
         private FurnitureViewModel furnitureVM { get; }
-
-        private List<int> transactionComboList;
 
         #endregion
 
@@ -54,20 +59,51 @@ namespace FurnitureStoreManagmentSystem.Views
             Close();
         }
 
+        /// <summary>Handles the Click event of the Return control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        public void Return_Click(object sender, RoutedEventArgs e)
+        {
+            this.furnitureVM.CreateTransaction(Singletons.CurrentCustomer.Id);
+            double fees = 0;
+            foreach (var furn in Singletons.FurnitureCart)
+            {
+                this.furnitureVM.ReturnItems(furn.Id, furn.tID, furn.Quantity, Singletons.CurrentTransaction);
+                if (this.furnitureVM.DetermineLateFees(furn.tID) > 0)
+                {
+                    fees += furn.Price * this.furnitureVM.DetermineLateFees(furn.tID);
+                }
+            }
+
+            this.furnitureVM.CreateReturn(Singletons.CurrentTransaction, fees);
+            this.backButton.Content = "Close";
+            this.returnButton.Content = "Return Successful";
+            this.returnButton.IsEnabled = false;
+            this.addButton.IsEnabled = false;
+            this.transactionCombo.IsEnabled = false;
+            this.lstResults.ItemsSource = Singletons.FurnitureCart.ConvertToObservable();
+            this.lblError.Text = "Fees: " + fees.ToString("C");
+        }
+
+        /// <summary>Handles the Click event of the Add control.</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public async void Add_Click(object sender, RoutedEventArgs e)
         {
             if (this.lstResults.SelectedItem != null)
             {
-                var selectedFurniture = (Furniture)this.lstResults.SelectedItem;
+                var selectedFurniture = (Furniture) this.lstResults.SelectedItem;
                 var containsFurniture = false;
 
                 foreach (var furn in Singletons.FurnitureCart)
                 {
-                    if (furn.Id == selectedFurniture.Id && furn.tID == this.transactionComboList[this.transactionCombo.SelectedIndex])
+                    if (furn.Id == selectedFurniture.Id &&
+                        furn.tID == this.transactionComboList[this.transactionCombo.SelectedIndex])
                     {
                         containsFurniture = true;
                     }
                 }
+
                 if (!containsFurniture)
                 {
                     var furniture = new Furniture
@@ -115,7 +151,8 @@ namespace FurnitureStoreManagmentSystem.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.lstResults.ItemsSource =
-                this.furnitureVM.GetFurnitureInRentals(this.transactionComboList[this.transactionCombo.SelectedIndex]).ConvertToObservable();
+                this.furnitureVM.GetFurnitureInRentals(this.transactionComboList[this.transactionCombo.SelectedIndex])
+                    .ConvertToObservable();
         }
 
         private void List_SelectionChanged(object sender, SelectionChangedEventArgs e)

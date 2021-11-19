@@ -117,8 +117,8 @@ namespace FurnitureStoreManagmentSystem.Views
         {
             if (this.lstResults.SelectedItem != null)
             {
-                Singletons.CurrentCustomer = (Customer)this.lstResults.SelectedItem;
-                
+                Singletons.CurrentCustomer = (Customer) this.lstResults.SelectedItem;
+
                 var returnWindow = new ReturnWindow();
                 returnWindow.Show();
                 Close();

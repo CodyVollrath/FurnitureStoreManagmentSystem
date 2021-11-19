@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.ViewModel;
@@ -34,7 +35,7 @@ namespace FurnitureStoreManagmentSystem.Views
             }
 
             Singletons.TotalCost = totalCost;
-            this.priceText.Text = "Total Cost: " + totalCost.ToString("C");
+            this.priceText.Text = "Total Cost per Day: " + totalCost.ToString("C");
             this.furnitureVM.LoadCart();
         }
 
@@ -57,19 +58,24 @@ namespace FurnitureStoreManagmentSystem.Views
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         public void Checkout_Click(object sender, RoutedEventArgs e)
         {
-            foreach (var furniture in Singletons.FurnitureCart)
+            if (this.datePicker.SelectedDate != null)
             {
-                this.furnitureVM.CreateItemCheckOut(furniture.Id, Singletons.CurrentTransaction, furniture.Quantity);
+                foreach (var furniture in Singletons.FurnitureCart)
+                {
+                    this.furnitureVM.CreateItemCheckOut(furniture.Id, Singletons.CurrentTransaction, furniture.Quantity);
+                }
+                var cost = Singletons.TotalCost *
+                           ((System.DateTime)this.datePicker.SelectedDate - DateTime.Now).TotalDays;
+                this.furnitureVM.CreateRental(Singletons.CurrentTransaction, Singletons.TotalCost * cost, (System.DateTime)this.datePicker.SelectedDate);
+                this.priceText.Text = "Total Cost: " + cost.ToString("C");
+                this.backButton.Content = "Close";
+                this.checkoutButton.Content = "Checkout Successful";
+                this.checkoutButton.IsEnabled = false;
+                this.removeButton.IsEnabled = false;
+                Singletons.CurrentTransaction = 0;
+                Singletons.CurrentCustomer = null;
+                Singletons.FurnitureCart = new List<Furniture>();
             }
-
-            this.furnitureVM.CreateRental(Singletons.CurrentTransaction, Singletons.TotalCost);
-            this.backButton.Content = "Close";
-            this.checkoutButton.Content = "Checkout Successful";
-            this.checkoutButton.IsEnabled = false;
-            this.removeButton.IsEnabled = false;
-            Singletons.CurrentTransaction = 0;
-            Singletons.CurrentCustomer = null;
-            Singletons.FurnitureCart = new List<Furniture>();
         }
 
         /// <summary>Handles the Click event of the remove control.</summary>

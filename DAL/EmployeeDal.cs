@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using FurnitureStoreManagmentSystem.Extensions;
 using FurnitureStoreManagmentSystem.Models;
 using FurnitureStoreManagmentSystem.Resources;

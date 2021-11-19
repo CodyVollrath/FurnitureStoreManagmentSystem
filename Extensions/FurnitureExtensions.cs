@@ -9,6 +9,7 @@ namespace FurnitureStoreManagmentSystem.Extensions
     public static class FurnitureExtensions
     {
         #region Methods
+
         /// <summary>Converts an Enumerable collection of furniture to an observable collection.</summary>
         /// <param name="furnitures">The customers - the collection to be converted to an observable list.</param>
         /// <returns>The observable collection of furniture</returns>

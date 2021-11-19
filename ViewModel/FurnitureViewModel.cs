@@ -22,6 +22,10 @@ namespace FurnitureStoreManagmentSystem.ViewModel
 
         private ObservableCollection<Furniture> cart;
 
+        #endregion
+
+        #region Properties
+
         public string FurnitureId { get; set; }
         public string Name { get; set; }
         public string Style { get; set; }
@@ -30,9 +34,6 @@ namespace FurnitureStoreManagmentSystem.ViewModel
         public List<string> Categories { get; set; }
 
         public List<string> Styles { get; set; }
-        #endregion
-
-        #region Properties
 
         private FurnitureDal FurnitureDal { get; }
 
@@ -74,7 +75,7 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             this.FurnitureDal = new FurnitureDal();
 
             this.Categories = (List<string>) this.FurnitureDal.GetCategories();
-            this.Styles = (List<string>)this.FurnitureDal.GetStyles();
+            this.Styles = (List<string>) this.FurnitureDal.GetStyles();
         }
 
         #endregion
@@ -91,39 +92,41 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             return Singletons.FurnitureCart.ConvertToObservable();
         }
 
+        /// <summary>Gets the furniture.</summary>
         public void GetFurniture()
         {
-            List<Furniture> searchResults = new List<Furniture>();
+            var searchResults = new List<Furniture>();
             var results = this.FurnitureDal.GetFurniture();
             searchResults = searchResults.Concat(results).ToList();
             this.FurnitureSearchResults = searchResults.ConvertToObservable();
         }
 
-        public void LoadSearchResults() 
+        /// <summary>Gets the furniture based on search results.</summary>
+        public void LoadSearchResults()
         {
             int id;
-            List<Furniture> searchResults = new List<Furniture>();
+            var searchResults = new List<Furniture>();
             this.ValidateFields();
-            if (this.FurnitureId != null && this.FurnitureId != string.Empty) 
+            if (this.FurnitureId != null && this.FurnitureId != string.Empty)
             {
                 id = int.Parse(this.FurnitureId);
                 var results = this.FurnitureDal.GetFurnituresById(id);
                 searchResults = searchResults.Concat(results).ToList();
             }
 
-            if (this.Name != null && this.Name != string.Empty) 
+            if (this.Name != null && this.Name != string.Empty)
             {
                 var results = this.FurnitureDal.GetFurnituresByName(this.Name);
                 searchResults = searchResults.Concat(results).ToList();
             }
-            
-            if (this.Style != null && this.Style != string.Empty) 
+
+            if (this.Style != null && this.Style != string.Empty)
             {
                 var results = this.FurnitureDal.GetFurnituresByStyleName(this.Style);
                 searchResults = searchResults.Concat(results).ToList();
             }
 
-            if (this.Category != null && this.Category != string.Empty) 
+            if (this.Category != null && this.Category != string.Empty)
             {
                 var results = this.FurnitureDal.GetFurnituresByCategoryName(this.Category);
                 searchResults = searchResults.Concat(results).ToList();
@@ -136,10 +139,10 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             this.Category = string.Empty;
         }
 
-        private void ValidateFields() 
+        private void ValidateFields()
         {
-            Regex idRegex = new Regex(@"^\d*$");
-            if (this.FurnitureId != null && this.FurnitureId != string.Empty && !idRegex.IsMatch(this.FurnitureId)) 
+            var idRegex = new Regex(@"^\d*$");
+            if (this.FurnitureId != null && this.FurnitureId != string.Empty && !idRegex.IsMatch(this.FurnitureId))
             {
                 this.ErrorLabel = "Invalid ID Entered";
             }
@@ -152,6 +155,8 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             return this.FurnitureDal.GetRentals(id);
         }
 
+        /// <summary>Gets the furniture in rentals.</summary>
+        /// <param name="id">The customer identifier.</param>
         public List<Furniture> GetFurnitureInRentals(int id)
         {
             return this.FurnitureDal.GetFurnitureInRentals(id);
@@ -176,9 +181,35 @@ namespace FurnitureStoreManagmentSystem.ViewModel
         /// <summary>Creates the rental transaction.</summary>
         /// <param name="tID">The transaction identifier.</param>
         /// <param name="cost">The cost.</param>
-        public void CreateRental(int tID, double cost)
+        /// <param name="date">The date.</param>
+        public void CreateRental(int tID, double cost, DateTime date)
         {
-            this.FurnitureDal.CreateRental(tID, cost);
+            this.FurnitureDal.CreateRental(tID, cost, date);
+        }
+
+        /// <summary>Creates the return transaction.</summary>
+        /// <param name="tID">The transaction identifier.</param>
+        /// <param name="fees">The fees.</param>
+        public void CreateReturn(int tID, double fees)
+        {
+            this.FurnitureDal.CreateReturn(tID, fees);
+        }
+
+        /// <summary>Return the furniture.</summary>
+        /// <param name="fID">The furniture identifier.</param>
+        /// <param name="tID">The transaction identifier.</param>
+        /// <param name="quantity">The quantity to be returned.</param>
+        /// <param name="currentTransaction">The return tID.</param>
+        public void ReturnItems(int fID, int tID, int quantity, int currentTransaction)
+        {
+            this.FurnitureDal.ReturnItems(fID, tID, quantity, currentTransaction);
+        }
+
+        /// <summary>Determine the late fees.</summary>
+        /// <param name="tID">The transaction identifier.</param>
+        public double DetermineLateFees(int tID)
+        {
+            return 0;
         }
 
         /// <summary>Occurs when [property changed].</summary>

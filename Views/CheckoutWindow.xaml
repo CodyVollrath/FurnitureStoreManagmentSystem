@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CheckoutWindow" Height="475" Width="420">
+        Title="CheckoutWindow" Height="500" Width="420">
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Height="444" VerticalAlignment="Top" Width="412">
+        <StackPanel HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="412">
             <Button x:Name="backButton" Content="Back" Click="Back_Click" Margin="10,10,0,10" Width="75" Height="25"
                     HorizontalAlignment="Left" />
             <TextBlock x:Name="customerText" Text="Customer: Full Name and ID" HorizontalAlignment="Center"
                        Margin="0,0,0,5" />
             <TextBlock x:Name="transactionText" Text="Transaction: ID" HorizontalAlignment="Center" Margin="0,0,0,5" />
-            <Button x:Name="removeButton" Content="Remove" Click="Remove_Click" Margin="0,0,10,0" Width="75" Height="25"
+            <Button x:Name="removeButton" Content="Remove" Click="Remove_Click" Margin="0,0,10,0" Width="75"
+                    Height="25"
                     HorizontalAlignment="Right" />
             <ListView x:Name="lstResults" SelectionMode="Single"
                       ItemsSource="{Binding Path=Cart, Mode=TwoWay}"
@@ -29,7 +30,9 @@
                 </ListView.View>
             </ListView>
             <TextBlock x:Name="priceText" Text="Price: #" HorizontalAlignment="Center" Margin="0,20,0,5" />
-            <Button x:Name="checkoutButton" Content="Complete Checkout" HorizontalAlignment="Center" VerticalAlignment="Top" Width="133"
+            <DatePicker x:Name="datePicker" Margin="20,0,20,10"/>
+            <Button x:Name="checkoutButton" Content="Complete Checkout" HorizontalAlignment="Center"
+                    VerticalAlignment="Top" Width="133"
                     Height="32" Margin="0,0,0,20" Click="Checkout_Click" />
         </StackPanel>
     </Grid>
