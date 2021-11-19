@@ -14,7 +14,8 @@
             <TextBlock Text="Transaction ID"
                        Margin="21,0,0,-10" Height="18" />
             <ComboBox x:Name="transactionCombo" SelectionChanged="ComboBox_SelectionChanged" Margin="21,10,306,10" />
-            <Button x:Name="addButton" Content="Add to Return" Click="Add_Click" Margin="0,0,20,0" Width="100" Height="25"
+            <Button x:Name="addButton" Content="Add to Return" Click="Add_Click" Margin="0,0,20,0" Width="100"
+                    Height="25"
                     HorizontalAlignment="Right" />
             <ListView x:Name="lstResults" SelectionMode="Single"
                       ItemsSource="{Binding Path=Cart, Mode=TwoWay}"
@@ -31,7 +32,8 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="returnButton" Content="Return Items in Cart" Click="Return_Click" Margin="0,0,20,0" Width="150" Height="25"
+            <Button x:Name="returnButton" Content="Return Items in Cart" Click="Return_Click" Margin="0,0,20,0"
+                    Width="150" Height="25"
                     HorizontalAlignment="Center" />
             <TextBlock x:Name="lblError" FontSize="15" Foreground="Red" Text=""
                        VerticalAlignment="Top" HorizontalAlignment="Center" Width="374" />

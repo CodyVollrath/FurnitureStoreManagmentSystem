@@ -62,11 +62,14 @@ namespace FurnitureStoreManagmentSystem.Views
             {
                 foreach (var furniture in Singletons.FurnitureCart)
                 {
-                    this.furnitureVM.CreateItemCheckOut(furniture.Id, Singletons.CurrentTransaction, furniture.Quantity);
+                    this.furnitureVM.CreateItemCheckOut(furniture.Id, Singletons.CurrentTransaction,
+                        furniture.Quantity);
                 }
+
                 var cost = Singletons.TotalCost *
-                           ((System.DateTime)this.datePicker.SelectedDate - DateTime.Now).TotalDays;
-                this.furnitureVM.CreateRental(Singletons.CurrentTransaction, Singletons.TotalCost * cost, (System.DateTime)this.datePicker.SelectedDate);
+                           ((DateTime) this.datePicker.SelectedDate - DateTime.Now).TotalDays;
+                this.furnitureVM.CreateRental(Singletons.CurrentTransaction, Singletons.TotalCost * cost,
+                    (DateTime) this.datePicker.SelectedDate);
                 this.priceText.Text = "Total Cost: " + cost.ToString("C");
                 this.backButton.Content = "Close";
                 this.checkoutButton.Content = "Checkout Successful";
