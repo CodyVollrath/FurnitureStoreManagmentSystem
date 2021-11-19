@@ -116,6 +116,41 @@ namespace FurnitureStoreManagmentSystem.DAL
             return categories;
         }
 
+        internal List<Furniture> GetFurnitureInRentals(int id)
+        {
+            var furnitureList = new List<Furniture>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query = "select * from furniture, item_check_out where item_check_out.fID=furniture.fID and item_check_out.tID=@id";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+                furnitureList = this.GetFurnitureByCommandWithIDs(command, furnitureList);
+            }
+
+            return furnitureList;
+        }
+
+        public List<int> GetRentals(int id)
+        {
+            List<int> rentals = new List<int>();
+            using (var connection = new MySqlConnection(Constants.ConnectionString))
+            {
+                connection.Open();
+                var query = "select item_check_out.tID from transaction, item_check_out where transaction.cID=@id and transaction.tID=item_check_out.tID GROUP BY item_check_out.tID";
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.Add("@id", MySqlDbType.VarChar).Value = id;
+                var reader = command.ExecuteReader();
+                var tID = reader.GetOrdinal("tID");
+                while (reader.Read())
+                {
+                    rentals.Add(reader.GetFieldValueCheckNull<int>(tID));
+                }
+            }
+
+            return rentals;
+        }
+
         /// <summary>
         /// Gets the style names from the styles table
         /// </summary>
@@ -231,6 +266,37 @@ namespace FurnitureStoreManagmentSystem.DAL
             var styleName = reader.GetOrdinal("styleName");
             var categoryName = reader.GetOrdinal("categoryName");
             var quantity = reader.GetOrdinal("quantity");
+            var price = reader.GetOrdinal("daily_rental_rate");
+            while (reader.Read())
+            {
+                furnitureList.Add(new Furniture
+                {
+                    Id = reader.GetFieldValueCheckNull<int>(fId),
+                    ItemName = reader.GetFieldValueCheckNull<string>(itemName),
+                    ItemDescription = reader.GetFieldValueCheckNull<string>(itemDescription),
+                    StyleName = reader.GetFieldValueCheckNull<string>(styleName),
+                    CategoryName = reader.GetFieldValueCheckNull<string>(categoryName),
+                    Quantity = reader.GetFieldValueCheckNull<int>(quantity),
+                    Price = reader.GetFieldValueCheckNull<double>(price)
+                });
+            }
+
+            return furnitureList;
+        }
+
+        /// <summary>Gets the furniture from a constructed command query.</summary>
+        /// <param name="command">The command.</param>
+        /// <param name="furnitureList">The customer list.</param>
+        /// <returns>A list of furniture that correspond with the command delivered to the sql driver</returns>
+        private List<Furniture> GetFurnitureByCommandWithIDs(MySqlCommand command, List<Furniture> furnitureList)
+        {
+            using var reader = command.ExecuteReader();
+            var fId = reader.GetOrdinal("fID");
+            var itemName = reader.GetOrdinal("itemName");
+            var itemDescription = reader.GetOrdinal("itemDescription");
+            var styleName = reader.GetOrdinal("styleName");
+            var categoryName = reader.GetOrdinal("categoryName");
+            var quantity = reader.GetOrdinal("fQuantity");
             var price = reader.GetOrdinal("daily_rental_rate");
             while (reader.Read())
             {

@@ -113,6 +113,22 @@ namespace FurnitureStoreManagmentSystem.Views
             }
         }
 
+        public void Return_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.lstResults.SelectedItem != null)
+            {
+                Singletons.CurrentCustomer = (Customer)this.lstResults.SelectedItem;
+                
+                var returnWindow = new ReturnWindow();
+                returnWindow.Show();
+                Close();
+            }
+            else
+            {
+                this.lblErrorSelectedCustomer.Text = "Return failed: No customer selected";
+            }
+        }
+
         #endregion
     }
 }

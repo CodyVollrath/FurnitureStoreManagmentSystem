@@ -52,6 +52,7 @@
             </ListView>
             <Button Content="Edit Selected Customer" Width="200" Click="EditCustomer_Click" />
             <Button Content="Create New Transaction" Width="200" Margin="5" Click="CreateTransaction_Click" />
+            <Button Content="Return Furniture" Width="200" Margin="5" Click="Return_Click" />
             <TextBlock x:Name="tIDText" HorizontalAlignment="Center" TextWrapping="Wrap" Text=""
                        VerticalAlignment="Top" Height="18" Width="337" TextAlignment="Center" Margin="30,0" />
             <TextBlock x:Name="lblErrorSelectedCustomer" FontSize="20" Foreground="Red" Text="" TextAlignment="Center" />

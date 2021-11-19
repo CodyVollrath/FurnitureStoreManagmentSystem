@@ -151,6 +151,9 @@
     <Compile Include="Views\AdminTerminalWindow.xaml.cs">
       <DependentUpon>AdminTerminalWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ReturnWindow.xaml.cs">
+      <DependentUpon>ReturnWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CheckoutWindow.xaml.cs">
       <DependentUpon>CheckoutWindow.xaml</DependentUpon>
     </Compile>
@@ -179,6 +182,10 @@
     <Page Include="Views\AdminTerminalWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReturnWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CheckoutWindow.xaml">
       <SubType>Designer</SubType>

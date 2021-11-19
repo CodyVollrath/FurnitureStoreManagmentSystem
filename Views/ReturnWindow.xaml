@@ -1,22 +1,25 @@
-﻿<Window x:Class="FurnitureStoreManagmentSystem.Views.CheckoutWindow"
+﻿<Window x:Class="FurnitureStoreManagmentSystem.Views.ReturnWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CheckoutWindow" Height="475" Width="420">
+        Title="Return" Height="475" Width="420">
     <Grid>
         <StackPanel HorizontalAlignment="Left" Height="444" VerticalAlignment="Top" Width="412">
-            <Button x:Name="backButton" Content="Back" Click="Back_Click" Margin="10,10,0,10" Width="75" Height="25"
+            <Button Content="Back" Click="Back_Click" Margin="10,10,0,10" Width="75" Height="25"
                     HorizontalAlignment="Left" />
             <TextBlock x:Name="customerText" Text="Customer: Full Name and ID" HorizontalAlignment="Center"
                        Margin="0,0,0,5" />
-            <TextBlock x:Name="transactionText" Text="Transaction: ID" HorizontalAlignment="Center" Margin="0,0,0,5" />
-            <Button x:Name="removeButton" Content="Remove" Click="Remove_Click" Margin="0,0,10,0" Width="75" Height="25"
+            <TextBlock Text="Transaction ID"
+                       Margin="21,0,0,-10" Height="18" />
+            <ComboBox x:Name="transactionCombo" SelectionChanged="ComboBox_SelectionChanged" Margin="21,10,306,10"/>
+            <Button Content="Add to Return" Click="Add_Click" Margin="0,0,20,0" Width="100" Height="25"
                     HorizontalAlignment="Right" />
             <ListView x:Name="lstResults" SelectionMode="Single"
                       ItemsSource="{Binding Path=Cart, Mode=TwoWay}"
-                      HorizontalAlignment="Center" Width="370" Height="242" Margin="10,0">
+                      HorizontalAlignment="Center" Width="370" Height="242" Margin="10,0"
+                      SelectionChanged="List_SelectionChanged">
                 <ListView.View>
                     <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Furniture Information">
                         <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="FID" Width="50" />
@@ -28,9 +31,8 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBlock x:Name="priceText" Text="Price: #" HorizontalAlignment="Center" Margin="0,20,0,5" />
-            <Button x:Name="checkoutButton" Content="Complete Checkout" HorizontalAlignment="Center" VerticalAlignment="Top" Width="133"
-                    Height="32" Margin="0,0,0,20" Click="Checkout_Click" />
+            <TextBlock x:Name="lblError" FontSize="15" Foreground="Red" Text=""
+                       VerticalAlignment="Top" HorizontalAlignment="Center" Width="374" />
         </StackPanel>
     </Grid>
 </Window>

@@ -63,12 +63,13 @@ namespace FurnitureStoreManagmentSystem.Views
             }
 
             this.furnitureVM.CreateRental(Singletons.CurrentTransaction, Singletons.TotalCost);
-            var furnitureWindow = new FurnitureWindow();
-            furnitureWindow.Show();
+            this.backButton.Content = "Close";
+            this.checkoutButton.Content = "Checkout Successful";
+            this.checkoutButton.IsEnabled = false;
+            this.removeButton.IsEnabled = false;
             Singletons.CurrentTransaction = 0;
             Singletons.CurrentCustomer = null;
             Singletons.FurnitureCart = new List<Furniture>();
-            Close();
         }
 
         /// <summary>Handles the Click event of the remove control.</summary>

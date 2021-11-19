@@ -35,6 +35,10 @@
         /// <value>The price.</value>
         public double Price { get; set; }
 
+        /// <summary>Gets or sets the tID.</summary>
+        /// <value>The tID.</value>
+        public int tID { get; set; }
+
         #endregion
     }
 }

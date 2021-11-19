@@ -24,6 +24,8 @@ namespace FurnitureStoreManagmentSystem.Views
             this.furnitureVM = new FurnitureViewModel();
             this.InitializeComponent();
             DataContext = this.furnitureVM;
+            this.furnitureVM.GetFurniture();
+            this.lstResults.ItemsSource = this.furnitureVM.FurnitureSearchResults;
         }
 
         #endregion

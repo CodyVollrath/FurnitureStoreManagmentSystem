@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -90,6 +91,14 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             return Singletons.FurnitureCart.ConvertToObservable();
         }
 
+        public void GetFurniture()
+        {
+            List<Furniture> searchResults = new List<Furniture>();
+            var results = this.FurnitureDal.GetFurniture();
+            searchResults = searchResults.Concat(results).ToList();
+            this.FurnitureSearchResults = searchResults.ConvertToObservable();
+        }
+
         public void LoadSearchResults() 
         {
             int id;
@@ -134,6 +143,18 @@ namespace FurnitureStoreManagmentSystem.ViewModel
             {
                 this.ErrorLabel = "Invalid ID Entered";
             }
+        }
+
+        /// <summary>Gets the rental transactions.</summary>
+        /// <param name="id">The customer identifier.</param>
+        public List<int> ReturnFurniture(int id)
+        {
+            return this.FurnitureDal.GetRentals(id);
+        }
+
+        public List<Furniture> GetFurnitureInRentals(int id)
+        {
+            return this.FurnitureDal.GetFurnitureInRentals(id);
         }
 
         /// <summary>Creates the transaction.</summary>
