@@ -1,0 +1,87 @@
+1. SELECT DISTINCT
+	`customer`.`cID`,
+    CONCAT(
+        `customer`.`firstName`,
+        ' ',
+        `customer`.`lastName`
+    ) AS 'Customer Name',
+    `item_check_out`.`fID`,
+    `furniture`.`itemName`,
+    `furniture`.`itemDescription`,
+    `furniture`.`styleName`,
+    `furniture`.`categoryName`,
+    COALESCE(
+        `item_check_out`.`fQuantity` + `item_check_in`.`fQuantity`,
+        `item_check_out`.`fQuantity`
+    ) AS 'Quantity Rented',
+    `item_check_out`.`tID` AS 'rentalTID',
+    `rental`.`rentalDate`,
+    `rental`.`dueDate`,
+    `item_check_in`.`returnTID`,
+    `return`.`returnDate`,
+    CONCAT(
+        rentalEmployee.`firstName`,
+        ' ',
+        rentalEmployee.`lastName`
+    ) AS 'Checkout Employee',
+    CONCAT(
+        returnEmployee.`firstName`,
+        ' ',
+        returnEmployee.`lastName`
+    ) AS 'Check-In Employee'
+FROM
+    `furniture`,
+    `customer`,
+    `transaction` AS rentalTransaction,
+    `rental`,
+    `employee` AS rentalEmployee,
+    `item_check_out`  
+LEFT JOIN `item_check_in` ON `item_check_out`.`fID` = `item_check_in`.`fID` AND `item_check_out`.`tID` = `item_check_in`.`tID`
+LEFT JOIN `return` ON `item_check_in`.`returnTID` = `return`.`tID`
+LEFT JOIN `transaction` AS returnTransaction
+ON
+    returnTransaction.`tID` = `item_check_in`.`returnTID`
+LEFT JOIN `employee` AS returnEmployee
+ON
+    returnEmployee.`eID` = returnTransaction.`eID`
+WHERE
+    `furniture`.`fID` = `item_check_out`.`fID` AND `customer`.`cID` = rentalTransaction.`cID` AND rentalTransaction.`tID` = `item_check_out`.`tID` AND `rental`.`tID` = `item_check_out`.`tID` AND rentalEmployee.`eID` = rentalTransaction.`eID` AND (SELECT COUNT(*) FROM `item_check_out` AS co1, `transaction` AS tr1 WHERE co1.`tID`=tr1.`tID` AND tr1.`cID` = `customer`.`cID`) >= 3
+ORDER BY
+    `item_check_out`.`tID`
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2. SELECT DISTINCT
+    `customer`.`cID`,
+    CONCAT(
+        `customer`.`firstName`,
+        ' ',
+        `customer`.`lastName`
+    ) AS 'Customer Name',
+    `rental`.`rentalDate`,
+    `rental`.`dueDate`,
+    (
+    SELECT
+        COUNT(*)
+    FROM
+        `item_check_out`
+    WHERE
+        `item_check_out`.`tID` = `rental`.`tID`
+) AS 'Count'
+FROM
+    `rental`,
+    `customer`,
+    `transaction`
+WHERE
+    `rental`.`tID` = `transaction`.`tID` AND `transaction`.`cID` = `customer`.`cID`
+HAVING
+    (
+    SELECT
+        COUNT(*)
+    FROM
+        `item_check_out`
+    WHERE
+        `item_check_out`.`tID` = `rental`.`tID`
+) > 1
+ORDER BY
+    `customer`.`cID` ASC,
+    `rental`.`rentalDate` ASC
