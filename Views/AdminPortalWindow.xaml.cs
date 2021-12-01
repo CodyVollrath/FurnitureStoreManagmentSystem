@@ -29,5 +29,12 @@ namespace FurnitureStoreManagmentSystem.Views
             var terminal = new AdminTerminalWindow();
             terminal.Show();
         }
+
+        private void btnBack_Click(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
     }
 }

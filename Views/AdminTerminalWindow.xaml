@@ -27,6 +27,15 @@
             <Button x:Name="btnBack" Content="Back" Margin="5"  Width="96" Click="btnBack_Click"/>
         </StackPanel>
         <TextBlock Text="Output Terminal" Grid.Column="1" Grid.Row="3"/>
-        <TextBox VerticalScrollBarVisibility="Visible" x:Name="txtOutput" FontSize="15"  Background="Black" Foreground="LightGreen" Grid.Column="1" Grid.Row="4"></TextBox>
+        <TabControl Grid.Column="1" Grid.Row="4">
+            <TabItem Header="Grid View">
+                <DataGrid x:Name="sqlDataGridView">
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Output Window">
+                <TextBox VerticalScrollBarVisibility="Visible" x:Name="txtOutput" FontSize="15"  Background="Black" Foreground="LightGreen"></TextBox>
+            </TabItem>
+        </TabControl>
+        
     </Grid>
 </Window>

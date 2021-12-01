@@ -5,30 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureStoreManagmentSystem.Views"
         mc:Ignorable="d"
-        Title="AdminPortalWindow" Height="450" Width="800">
+        Title="AdminPortalWindow" Height="248" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="10"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <Button x:Name="btnSql" Grid.Column="0" Grid.Row="1" Content="SQL Terminal" Click="btnSql_Click"/>
-        <Button x:Name="btnManageEmployees" Grid.Column="0" Grid.Row="3" Content="Manage Employees"/>
-        <Button x:Name="btnManageFurniture" Grid.Column="0" Grid.Row="5" Content="Manage Furniture"/>
-        <Button x:Name="btnManageRentals" Grid.Column="0" Grid.Row="7" Content="Manage Rentals"/>
-        <TextBlock Grid.Column="1" Grid.Row="1" Text="Opens an SQL terminal instance that directly communicates with the database" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Grid.Row="3" Text="Opens the Controls to manage the basic Create Update and Delete operations for employees" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Grid.Row="5" Text="Opens the Controls to manage the basic Create Update and Delete operations for Furniture" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="1" Grid.Row="7" Text="Opens the Controls to manage the basic Create Update and Delete operations for employees" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="btnBack" Grid.Column="0" Grid.Row="0" Content="Back" Click="btnBack_Click"/>
+        <Button x:Name="btnSql" Grid.Column="0" Grid.Row="2" Content="SQL Terminal" Click="btnSql_Click"/>
+        <TextBlock Grid.Column="1" Grid.Row="2" Text="Opens an SQL terminal instance that directly communicates with the database" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>

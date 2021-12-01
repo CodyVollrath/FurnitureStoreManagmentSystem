@@ -57,6 +57,7 @@ namespace FurnitureStoreManagmentSystem.DAL
         {
             using (var connection = new MySqlConnection(Constants.ConnectionString))
             {
+                
                 connection.Open();
                 var query =
                     "select username, password, eID, firstName, lastName, admin from employee where username = @username and password = @password";

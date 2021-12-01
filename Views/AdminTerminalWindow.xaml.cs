@@ -26,17 +26,63 @@ namespace FurnitureStoreManagmentSystem.Views
             InitializeComponent();
             this.adminPortalVM = new AdminTerminalViewModel();
             DataContext = adminPortalVM;
+            this.sqlDataGridView.Visibility = Visibility.Collapsed;
         }
 
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
             this.adminPortalVM.SendCommand();
             this.txtOutput.Text = this.adminPortalVM.Output;
+            this.populateGridView(this.adminPortalVM.Output);
         }
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void populateGridView(string output) 
+        {
+            this.clearDataGrid();
+            try 
+            {
+                var lines = output.Split('\n');
+                var columns = lines[0].Split(',');
+                Dictionary<string, string> dataMap = new Dictionary<string, string>();
+                foreach (var column in columns) 
+                {
+                    DataGridTextColumn textColumn = new DataGridTextColumn();
+                    textColumn.Header = column;
+                    textColumn.Binding = new Binding(column.Replace(" ", ""));
+                    this.sqlDataGridView.Columns.Add(textColumn);
+                }
+                for (int rowIndex = 1; rowIndex < lines.Length; rowIndex++) 
+                {
+                    var line = lines[rowIndex];
+                    var fields = line.Split(',');
+                    dynamic exo = new System.Dynamic.ExpandoObject();
+                    for (int colIndex = 0; colIndex < fields.Length; colIndex++) 
+                    {
+                        var columnname = columns[colIndex].Replace(" ", "");
+                        ((IDictionary<string, object>) exo).Add(columnname, $"{fields[colIndex]}");
+                        
+                    }
+                    this.sqlDataGridView.Items.Add(exo);
+
+                }
+            } 
+            catch (Exception ex)
+            {
+                this.txtOutput.Text = ex.Message;
+                this.clearDataGrid();
+            }
+            
+        }
+
+        private void clearDataGrid() 
+        {
+            this.sqlDataGridView.Columns.Clear();
+            this.sqlDataGridView.Items.Clear();
         }
     }
 }

@@ -17,14 +17,17 @@ namespace FurnitureStoreManagmentSystem.DAL
                     connection.Open();
                     using MySqlCommand command = new MySqlCommand(query, connection);
                     using MySqlDataReader reader = command.ExecuteReader();
-
+                    output = getColumnNames(reader);
                     while (reader.Read())
                     {
+                        var delimiter = ",";
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            output += $"{reader[i]} ";
+                            if (i == reader.FieldCount - 1) {
+                                delimiter = "\n";
+                            }
+                            output += $"{reader[i]}{delimiter}";
                         }
-                        output += "\n";
                     }
                 }
             }
@@ -69,6 +72,19 @@ namespace FurnitureStoreManagmentSystem.DAL
                 command.Parameters["@admin"].Direction = System.Data.ParameterDirection.Input;
                 _ = command.ExecuteNonQuery();
             }
+        }
+
+        private static string getColumnNames(MySqlDataReader reader) 
+        {
+            var output = "";
+            var delimiter = ",";
+            for (int i = 0; i < reader.FieldCount; i++) {
+                if (i == reader.FieldCount - 1) {
+                    delimiter = "\n";
+                }
+                output += $"{reader.GetName(i)}{delimiter}";
+            }
+            return output;
         }
     }
 }
