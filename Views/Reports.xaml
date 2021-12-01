@@ -21,7 +21,7 @@
         <Label Content="End Date" Grid.Row ="0" Grid.Column="1"/>
         <DatePicker x:Name="startDatePicker" Grid.Row="1" Grid.Column="0"/>
         <DatePicker x:Name="endDatePicker" Grid.Row="1" Grid.Column="1"/>
-        <TextBox x:Name="txtReport" Grid.Row="2" Grid.ColumnSpan="2" Background="Black" Foreground="White" FontSize="20" IsEnabled="False"/>
+        <TextBox x:Name="txtReport" Grid.Row="2" Grid.ColumnSpan="2" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Background="Black" Foreground="White" FontSize="15"/>
         <Button x:Name="btnBack" Content="Back" Grid.Row="3" Grid.Column="1"  Click="btnBack_Click"/>
         <Button x:Name="btnSubmit" Content="Submit" Grid.Row="3" Click="btnSubmit_Click" />
     </Grid>

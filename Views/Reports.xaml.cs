@@ -32,9 +32,18 @@ namespace FurnitureStoreManagmentSystem.Views
 
         private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            DateTime startDate = DateTime.Parse(this.startDatePicker.Text);
-            DateTime endDate = DateTime.Parse(this.endDatePicker.Text);
-            this.txtReport.Text = AdminDal.ReportCommand(startDate, endDate);
+
+            try
+            {
+                DateTime startDate = DateTime.Parse(this.startDatePicker.Text);
+                DateTime endDate = DateTime.Parse(this.endDatePicker.Text);
+                this.txtReport.Text = AdminDal.ReportCommand(startDate, endDate);
+            }
+            catch (Exception ex) 
+            {
+                this.txtReport.Text = ex.Message;
+            }
+            
         }
     }
 }

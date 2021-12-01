@@ -2,6 +2,7 @@
 using FurnitureStoreManagmentSystem.Resources;
 using MySql.Data.MySqlClient;
 using System;
+using System.Collections.Generic;
 
 namespace FurnitureStoreManagmentSystem.DAL
 {
@@ -41,12 +42,13 @@ namespace FurnitureStoreManagmentSystem.DAL
 
         public static string ReportCommand(DateTime startDate, DateTime endDate)
         {
-            var output = "";
+            var output = "Report of people that have rented furniture and the furniture that they have rented:\n\n";
             var query = 
-                "select distinct CONCAT(C.firstName, ' ' ,C.lastName) as fullName, C.gender, C.dob, C.registrationDate, C.phoneNumber, C.city, C.state, C.zipcode, F.itemName " +
+                "select distinct C.cID, CONCAT(C.firstName, ' ' ,C.lastName) as fullName, F.itemName, F.itemDescription, IO.fQuantity" +
+                " " +
                 "from customer C, item_check_out IO, transaction T, furniture F, rental R " +
                 "where IO.tID = T.tID AND T.cID = C.cID AND F.fID = IO.fID AND T.tID = R.tID AND R.rentalDate BETWEEN @startDate AND @endDate";
-            
+            List<string> vistedCustomerNames = new List<string>();
             try
             {
                 using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
@@ -56,18 +58,16 @@ namespace FurnitureStoreManagmentSystem.DAL
                     command.Parameters.Add("@startDate", MySqlDbType.Date).Value = startDate;
                     command.Parameters.Add("@endDate", MySqlDbType.Date).Value = endDate;
                     using MySqlDataReader reader = command.ExecuteReader();
-                    output = getColumnNames(reader);
                     while (reader.Read())
                     {
-                        var delimiter = ",";
-                        for (int i = 0; i < reader.FieldCount; i++)
+                        var customerName = (string)reader[1];
+                        if (!vistedCustomerNames.Contains(customerName))
                         {
-                            if (i == reader.FieldCount - 1)
-                            {
-                                delimiter = "\n";
-                            }
-                            output += $"{reader[i]}{delimiter}";
+                            vistedCustomerNames.Add(customerName);
+                            output += $"Id: {reader[0]} | Name: {customerName}\nFurniture Rented\n";
                         }
+                        output += $"\tName: {reader[2]}\n\tDescription: {reader[3]}\n\tQty: {reader[4]}\n";
+                        
                     }
                 }
             }

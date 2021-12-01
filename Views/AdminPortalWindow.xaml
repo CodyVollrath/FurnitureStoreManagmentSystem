@@ -20,8 +20,8 @@
         </Grid.RowDefinitions>
         <Button x:Name="btnBack" Grid.Column="0" Grid.Row="0" Content="Back" Click="btnBack_Click"/>
         <Button x:Name="btnSql" Grid.Column="0" Grid.Row="2" Content="SQL Terminal" Click="btnSql_Click"/>
-        <Button x:Name="btnReports" Grid.Column="0" Grid.Row="4" Content="Reports Window" Click="btnReports_Click"/>
+        <Button x:Name="btnReports" Grid.Column="0" Grid.Row="4" Content="Reports Furniture Rentals" Click="btnReports_Click"/>
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Opens an SQL terminal instance that directly communicates with the database" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        
+        <TextBlock Grid.Column="1" Grid.Row="4" Text="Reports names of those that rented furniture and information for that furniture between two dates" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </Window>
