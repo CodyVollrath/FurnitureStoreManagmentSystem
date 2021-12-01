@@ -44,6 +44,7 @@ namespace FurnitureStoreManagmentSystem.Views
         private void populateGridView(string output) 
         {
             this.clearDataGrid();
+            this.sqlDataGridView.Visibility = Visibility.Visible;
             try 
             {
                 var lines = output.Split('\n');
@@ -75,6 +76,7 @@ namespace FurnitureStoreManagmentSystem.Views
             {
                 this.txtOutput.Text = ex.Message;
                 this.clearDataGrid();
+                this.sqlDataGridView.Visibility = Visibility.Collapsed;
             }
             
         }
