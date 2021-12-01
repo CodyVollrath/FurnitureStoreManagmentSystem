@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="CheckoutWindow" Height="500" Width="420">
+        Title="CheckoutWindow" Height="500" Width="416">
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="412">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="89*"/>
+            <ColumnDefinition Width="175*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel HorizontalAlignment="Left" Height="500" VerticalAlignment="Top" Width="412" Grid.ColumnSpan="2">
             <Button x:Name="backButton" Content="Back" Click="Back_Click" Margin="10,10,0,10" Width="75" Height="25"
                     HorizontalAlignment="Left" />
             <TextBlock x:Name="customerText" Text="Customer: Full Name and ID" HorizontalAlignment="Center"
@@ -35,5 +39,6 @@
                     VerticalAlignment="Top" Width="133"
                     Height="32" Margin="0,0,0,20" Click="Checkout_Click" />
         </StackPanel>
+        
     </Grid>
 </Window>

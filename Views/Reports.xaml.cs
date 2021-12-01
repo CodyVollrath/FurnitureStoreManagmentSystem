@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FurnitureStoreManagmentSystem.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,32 +16,25 @@ using System.Windows.Shapes;
 namespace FurnitureStoreManagmentSystem.Views
 {
     /// <summary>
-    /// Interaction logic for AdminPortalWindow.xaml
+    /// Interaction logic for Reports.xaml
     /// </summary>
-    public partial class AdminPortalWindow : Window
+    public partial class Reports : Window
     {
-        public AdminPortalWindow()
+        public Reports()
         {
             InitializeComponent();
         }
 
-        private void btnSql_Click(object sender, RoutedEventArgs e)
-        {
-            var terminal = new AdminTerminalWindow();
-            terminal.Show();
-        }
-
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
             this.Close();
         }
 
-        private void btnReports_Click(object sender, RoutedEventArgs e)
+        private void btnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            Reports reportsWindow = new Reports();
-            reportsWindow.Show();
+            DateTime startDate = DateTime.Parse(this.startDatePicker.Text);
+            DateTime endDate = DateTime.Parse(this.endDatePicker.Text);
+            this.txtReport.Text = AdminDal.ReportCommand(startDate, endDate);
         }
     }
 }

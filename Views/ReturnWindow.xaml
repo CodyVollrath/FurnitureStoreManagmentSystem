@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Return" Height="475" Width="420">
+        Title="Return" Height="475" Width="802">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <StackPanel HorizontalAlignment="Left" Height="444" VerticalAlignment="Top" Width="412">
             <Button x:Name="backButton" Content="Back" Click="Back_Click" Margin="10,10,0,10" Width="75" Height="25"
                     HorizontalAlignment="Left" />
@@ -37,6 +41,24 @@
                     HorizontalAlignment="Center" />
             <TextBlock x:Name="lblError" FontSize="15" Foreground="Red" Text=""
                        VerticalAlignment="Top" HorizontalAlignment="Center" Width="374" />
+        </StackPanel>
+        <StackPanel Grid.Column="1">
+            <TextBlock Margin="20 80 60 40" Text="Return Cart"/>
+            <ListView x:Name="lstReturnCart" SelectionMode="Single"
+                      ItemsSource="{Binding Path=Cart, Mode=TwoWay}"
+                      HorizontalAlignment="Center"
+                      SelectionChanged="List_SelectionChanged" Height="247">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Furniture Information">
+                        <GridViewColumn DisplayMemberBinding="{Binding Id, Mode=TwoWay}" Header="FID" Width="50" />
+                        <GridViewColumn DisplayMemberBinding="{Binding ItemName, Mode=TwoWay}" Header="Item Name"
+                                        Width="190" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Quantity, Mode=TwoWay}" Header="Quantity"
+                                        Width="60" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Price, Mode=TwoWay}" Header="Price" Width="60" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </StackPanel>
     </Grid>
 </Window>

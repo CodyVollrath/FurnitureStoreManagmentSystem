@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FurnitureStoreManagmentSystem.Views"
         mc:Ignorable="d"
-        Title="AdminPortalWindow" Height="248" Width="800">
+        Title="AdminPortalWindow" Height="382" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="250"/>
@@ -15,9 +15,13 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="100"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Button x:Name="btnBack" Grid.Column="0" Grid.Row="0" Content="Back" Click="btnBack_Click"/>
         <Button x:Name="btnSql" Grid.Column="0" Grid.Row="2" Content="SQL Terminal" Click="btnSql_Click"/>
+        <Button x:Name="btnReports" Grid.Column="0" Grid.Row="4" Content="Reports Window" Click="btnReports_Click"/>
         <TextBlock Grid.Column="1" Grid.Row="2" Text="Opens an SQL terminal instance that directly communicates with the database" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        
     </Grid>
 </Window>

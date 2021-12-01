@@ -39,6 +39,45 @@ namespace FurnitureStoreManagmentSystem.DAL
             return output;
         }
 
+        public static string ReportCommand(DateTime startDate, DateTime endDate)
+        {
+            var output = "";
+            var query = 
+                "select distinct CONCAT(C.firstName, ' ' ,C.lastName) as fullName, C.gender, C.dob, C.registrationDate, C.phoneNumber, C.city, C.state, C.zipcode, F.itemName " +
+                "from customer C, item_check_out IO, transaction T, furniture F, rental R " +
+                "where IO.tID = T.tID AND T.cID = C.cID AND F.fID = IO.fID AND T.tID = R.tID AND R.rentalDate BETWEEN @startDate AND @endDate";
+            
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
+                {
+                    connection.Open();
+                    using MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.Add("@startDate", MySqlDbType.Date).Value = startDate;
+                    command.Parameters.Add("@endDate", MySqlDbType.Date).Value = endDate;
+                    using MySqlDataReader reader = command.ExecuteReader();
+                    output = getColumnNames(reader);
+                    while (reader.Read())
+                    {
+                        var delimiter = ",";
+                        for (int i = 0; i < reader.FieldCount; i++)
+                        {
+                            if (i == reader.FieldCount - 1)
+                            {
+                                delimiter = "\n";
+                            }
+                            output += $"{reader[i]}{delimiter}";
+                        }
+                    }
+                }
+            }
+            catch (Exception exception)
+            {
+                output = exception.Message;
+            }
+            return output;
+        }
+
         public static void AddEmployee(Employee employee) 
         {
             using (MySqlConnection connection = new MySqlConnection(Constants.ConnectionString))
